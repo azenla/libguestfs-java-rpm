@@ -1073,12 +1073,14 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/libguestfs-test-tool.1*
 
 
+%ifarch aarch64 x86_64
 %files benchmarking
 %{_bindir}/libguestfs-boot-analysis
 %{_bindir}/libguestfs-boot-benchmark
 %{_bindir}/libguestfs-boot-benchmark-range.pl
 %{_mandir}/man1/libguestfs-boot-analysis.1*
 %{_mandir}/man1/libguestfs-boot-benchmark.1*
+%endif
 
 
 %files devel
