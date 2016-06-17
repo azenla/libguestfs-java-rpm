@@ -16,6 +16,10 @@
 # Filter perl provides
 %{?perl_default_filter}
 
+# ARM glibc is seriously broken in Rawhide at the moment:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1346070
+ExcludeArch: %{arm}
+
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
