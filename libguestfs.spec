@@ -16,10 +16,6 @@
 # Filter perl provides
 %{?perl_default_filter}
 
-# ARM glibc is seriously broken in Rawhide at the moment:
-# https://bugzilla.redhat.com/show_bug.cgi?id=1346070
-ExcludeArch: %{arm}
-
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
@@ -172,6 +168,9 @@ BuildRequires: syslinux syslinux-extlinux
 # into a /boot/<machine-id> subdirectory (in Fedora >= 23).  Read the
 # kernel-install script to understand why.
 BuildRequires: grubby
+
+# Minimum version containing fix for armv7 pwritev bug (RHBZ#1346070).
+BuildRequires: glibc >= 2.23.90-24.fc25
 
 # For building the appliance.
 Requires:      supermin >= 5.1.12
