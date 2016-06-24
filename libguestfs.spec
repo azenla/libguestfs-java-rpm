@@ -109,6 +109,8 @@ BuildRequires: ocaml-ounit-devel
 BuildRequires: ocaml-libvirt-devel >= 0.6.1.4-5
 BuildRequires: lua
 BuildRequires: lua-devel
+BuildRequires: perl-devel
+BuildRequires: perl-generators
 BuildRequires: perl-macros
 BuildRequires: perl(Sys::Virt)
 BuildRequires: perl(Test::More)
