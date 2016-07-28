@@ -152,7 +152,7 @@ BuildRequires: gcc >= 5.0.0-0.19.fc23
 #   for f in `cat appliance/packagelist`; do echo $f; done | sort -u
 # However you have to edit the list down to packages which exist in
 # current Fedora, since supermin ignores non-existent packages.
-BuildRequires: acl attr augeas-libs bash binutils btrfs-progs bzip2 coreutils cpio cryptsetup dhclient diffutils dosfstools e2fsprogs file findutils gawk gdisk genisoimage gfs2-utils grep gzip hivex iproute iputils jfsutils kernel kmod less libcap libldm libselinux libxml2 lsof lsscsi lvm2 lzop mdadm nilfs-utils openssh-clients parted pcre policycoreutils procps psmisc reiserfs-utils rsync scrub sed sleuthkit strace systemd tar udev util-linux vim-minimal xfsprogs xz yajl zerofree
+BuildRequires: acl attr augeas-libs bash binutils btrfs-progs bzip2 coreutils cpio cryptsetup curl debootstrap dhclient diffutils dosfstools e2fsprogs file findutils gawk gdisk genisoimage gfs2-utils grep gzip hivex iproute iputils jfsutils kernel kmod kpartx less libcap libldm libselinux libxml2 lsof lsscsi lvm2 lzop mdadm nilfs-utils openssh-clients parted pciutils pcre policycoreutils procps psmisc qemu-img reiserfs-utils rsync scrub sed sleuthkit strace systemd tar udev util-linux vim-minimal which xfsprogs xz yajl zerofree
 %ifnarch ppc
 BuildRequires: hfsplus-tools
 %endif
@@ -996,6 +996,8 @@ function move_to
 }
 move_to curl            zz-packages-dib
 move_to debootstrap     zz-packages-dib
+move_to kpartx          zz-packages-dib
+move_to qemu-img        zz-packages-dib
 move_to which           zz-packages-dib
 move_to sleuthkit       zz-packages-forensics
 move_to gfs2-utils      zz-packages-gfs2
