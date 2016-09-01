@@ -1246,6 +1246,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %dir %{_datadir}/bash-completion/completions
 %{_datadir}/bash-completion/completions/guestfish
 %{_datadir}/bash-completion/completions/guestmount
+%{_datadir}/bash-completion/completions/guestunmount
 %{_datadir}/bash-completion/completions/virt-*
 
 
