@@ -25,9 +25,9 @@ License:       LGPLv2+
 
 # Source and patches.
 URL:           http://libguestfs.org/
-Source0:       http://libguestfs.org/download/1.33-development/%{name}-%{version}.tar.gz
+Source0:       http://libguestfs.org/download/1.35-development/%{name}-%{version}.tar.gz
 %if 0%{verify_tarball_signature}
-Source1:       http://libguestfs.org/download/1.33-development/%{name}-%{version}.tar.gz.sig
+Source1:       http://libguestfs.org/download/1.35-development/%{name}-%{version}.tar.gz.sig
 %endif
 
 # libguestfs live service
