@@ -156,7 +156,7 @@ BuildRequires: acl attr augeas-libs bash binutils btrfs-progs bzip2 coreutils cp
 %ifnarch ppc
 BuildRequires: hfsplus-tools
 %endif
-%ifnarch %{arm} aarch64
+%ifnarch s390 s390x %{arm} aarch64
 # http://zfs-fuse.net/issues/94
 BuildRequires: zfs-fuse
 %endif
