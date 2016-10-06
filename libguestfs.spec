@@ -16,10 +16,9 @@
 # Currently the basic sanity check is *broken* on:
 #
 # aarch64: https://bugzilla.redhat.com/show_bug.cgi?id=1382318
-# arm:     https://bugzilla.redhat.com/show_bug.cgi?id=1325085
 # i686:    constantly broken, so I have disabled it, probably forever
 # power64: https://bugzilla.redhat.com/show_bug.cgi?id=1293024
-%global test_arches x86_64
+%global test_arches %{arm} x86_64
 
 %global _hardened_build 1
 
