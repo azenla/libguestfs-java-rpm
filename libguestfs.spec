@@ -891,7 +891,7 @@ ip route list ||:
 if ping -c 3 -w 20 8.8.8.8 && wget http://libguestfs.org -O /dev/null; then
   extra=
 else
-  mkdir repo
+  mkdir cachedir repo
   # -n 1 because of RHBZ#980502.
   find /var/cache/{dnf,yum} -type f -name '*.rpm' -print0 | \
     xargs -0 -n 1 cp -t repo
