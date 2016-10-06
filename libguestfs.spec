@@ -4,6 +4,23 @@
 # I now disable it:
 %global golang_arches NONE
 
+# Architectures that we run the basic sanity-check test.  The full
+# test suite is done after the package has been built.
+#
+# Here we only do a sanity check that kernel/qemu/libvirt/appliance is
+# not broken.
+#
+# To perform the full test suite, see instructions here:
+# https://www.redhat.com/archives/libguestfs/2015-September/msg00078.html
+#
+# Currently the basic sanity check is *broken* on:
+#
+# aarch64: https://bugzilla.redhat.com/show_bug.cgi?id=1382318
+# arm:     https://bugzilla.redhat.com/show_bug.cgi?id=1325085
+# i686:    constantly broken, so I have disabled it, probably forever
+# power64: https://bugzilla.redhat.com/show_bug.cgi?id=1293024
+%global test_arches x86_64
+
 %global _hardened_build 1
 
 # Trim older changelog entries.
@@ -935,19 +952,7 @@ popd
 
 %check
 
-# arm:     https://bugzilla.redhat.com/show_bug.cgi?id=1325085
-# i686:    constantly broken, so I have disabled it, probably forever
-# power64: https://bugzilla.redhat.com/show_bug.cgi?id=1293024
-%ifnarch %{arm} %{ix86} %{power64}
-
-# Note that the major tests are done after the package has been built.
-#
-# Here we only do a sanity check that kernel/qemu/libvirt/appliance is
-# not broken.
-#
-# To perform the full test suite, see instructions here:
-# https://www.redhat.com/archives/libguestfs/2015-September/msg00078.html
-
+%ifarch %{test_arches}
 export LIBGUESTFS_DEBUG=1
 export LIBGUESTFS_TRACE=1
 export LIBVIRT_DEBUG=1
@@ -956,7 +961,6 @@ if ! make quickcheck QUICKCHECK_TEST_TOOL_ARGS="-t 1200"; then
     cat $HOME/.cache/libvirt/qemu/log/*
     exit 1
 fi
-
 %endif
 
 
