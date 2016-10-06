@@ -20,7 +20,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.35.6
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -244,8 +244,10 @@ subpackages are:
        libguestfs-tools-c  only the subset of virt tools written in C
                              (for reduced dependencies)
                  virt-dib  safe and secure diskimage-builder replacement
-                 virt-v2v  convert virtual or physical machines to run
-                             on KVM (also known as V2V and P2V)
+                 virt-v2v  convert virtual machines to run on KVM
+                             (also known as V2V)
+           virt-p2v-maker  convert physical machines to run on KVM
+                             (also known as P2V)
 
 For enhanced features, install:
 
@@ -581,16 +583,42 @@ Requires:      gzip
 Requires:      unzip
 Requires:      curl
 Requires:      /usr/bin/virsh
-# 'strip' binary is required by virt-p2v-make-kickstart.
-Requires:      binutils
 
 # For rhsrvany.exe, used to install firstboot scripts in Windows guests.
 Requires:      mingw32-srvany >= 1.0-13
 
 
 %description -n virt-v2v
-Virt-v2v and virt-p2v are tools that convert virtual machines from
-non-KVM hypervisors, or physical machines, to run under KVM.
+Virt-v2v converts virtual machines from non-KVM hypervisors
+to run under KVM.
+
+To convert physical machines, see the virt-p2v-maker package.
+
+
+%package -n virt-p2v-maker
+Summary:       Convert a physical machine to run on KVM
+License:       GPLv2+
+
+Requires:      gawk
+Requires:      gzip
+
+# virt-p2v-make-disk runs virt-builder:
+Requires:      %{name}-tools-c = %{epoch}:%{version}-%{release}
+
+# virt-p2v-make-kickstart runs strip:
+Requires:      binutils
+
+
+%description -n virt-p2v-maker
+Virt-p2v converts (virtualizes) physical machines so they can be run
+as virtual machines under KVM.
+
+This package contains the tools needed to make a virt-p2v boot CD or
+USB key which is booted on the physical machine to perform the
+conversion.  You also need virt-v2v installed somewhere else to
+complete the conversion.
+
+To convert virtual machines from other hypervisors, see virt-v2v.
 
 
 %package bash-completion
@@ -1226,21 +1254,26 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 %files -n virt-v2v
 %doc COPYING README v2v/TODO
+%{_bindir}/virt-v2v
+%{_bindir}/virt-v2v-copy-to-local
+%{_mandir}/man1/virt-v2v.1*
+%{_mandir}/man1/virt-v2v-copy-to-local.1*
+%{_mandir}/man1/virt-v2v-test-harness.1*
+%{_datadir}/virt-tools
+
+
+%files -n virt-p2v-maker
+%doc COPYING README
 %{_libexecdir}/virt-p2v
 %{_bindir}/virt-p2v-make-disk
 %{_bindir}/virt-p2v-make-kickstart
 %{_bindir}/virt-p2v-make-kiwi
-%{_bindir}/virt-v2v
-%{_bindir}/virt-v2v-copy-to-local
 %{_mandir}/man1/virt-p2v.1*
 %{_mandir}/man1/virt-p2v-make-disk.1*
 %{_mandir}/man1/virt-p2v-make-kickstart.1*
 %{_mandir}/man1/virt-p2v-make-kiwi.1*
-%{_mandir}/man1/virt-v2v.1*
-%{_mandir}/man1/virt-v2v-copy-to-local.1*
-%{_mandir}/man1/virt-v2v-test-harness.1*
 %{_datadir}/virt-p2v
-%{_datadir}/virt-tools
+
 
 %files bash-completion
 %dir %{_datadir}/bash-completion/completions
@@ -1388,6 +1421,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Oct 06 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.6-2
+- Split off virt-p2v into virt-p2v-maker so it doesn't depend on X
+  (RHBZ#1382275).
+
 * Fri Sep 23 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.6-1
 - New upstream version 1.35.6.
 
