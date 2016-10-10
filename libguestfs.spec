@@ -18,7 +18,8 @@
 # aarch64: https://bugzilla.redhat.com/show_bug.cgi?id=1382318
 # i686:    constantly broken, so I have disabled it, probably forever
 # power64: https://bugzilla.redhat.com/show_bug.cgi?id=1293024
-%global test_arches %{arm} x86_64
+# x86_64:  https://bugzilla.redhat.com/show_bug.cgi?id=1383451
+%global test_arches %{arm}
 
 %global _hardened_build 1
 
