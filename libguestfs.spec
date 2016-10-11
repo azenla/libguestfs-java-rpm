@@ -568,6 +568,8 @@ Virt-sparsify makes virtual machine disk images sparse (thin-provisioned).
 Virt-sysprep lets you reset or unconfigure virtual machines in
 preparation for cloning them.
 
+Virt-tail follows (tails) a log file within a guest, like 'tail -f'.
+
 Virt-tar-in and virt-tar-out are archive, backup and upload tools
 for virtual machines.  These replace the deprecated program virt-tar.
 
@@ -1237,6 +1239,8 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/virt-sparsify.1*
 %{_bindir}/virt-sysprep
 %{_mandir}/man1/virt-sysprep.1*
+%{_bindir}/virt-tail
+%{_mandir}/man1/virt-tail.1*
 %{_bindir}/virt-tar-in
 %{_mandir}/man1/virt-tar-in.1*
 %{_bindir}/virt-tar-out
