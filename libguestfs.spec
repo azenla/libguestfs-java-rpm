@@ -1272,7 +1272,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 %files -n virt-p2v-maker
 %doc COPYING README
-%{_libexecdir}/virt-p2v
 %{_bindir}/virt-p2v-make-disk
 %{_bindir}/virt-p2v-make-kickstart
 %{_bindir}/virt-p2v-make-kiwi
@@ -1281,6 +1280,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/virt-p2v-make-kickstart.1*
 %{_mandir}/man1/virt-p2v-make-kiwi.1*
 %{_datadir}/virt-p2v
+%{_libdir}/virt-p2v
 
 
 %files bash-completion
