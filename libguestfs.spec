@@ -37,7 +37,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.35.8
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -458,22 +458,24 @@ Summary:       System administration tools for virtual machines
 License:       GPLv2+
 Requires:      %{name} = %{epoch}:%{version}-%{release}
 
-# for guestfish:
+# For guestfish:
 #Requires:      /usr/bin/emacs #theoretically, but too large
 Requires:      /usr/bin/hexedit
 Requires:      /usr/bin/less
 Requires:      /usr/bin/man
 Requires:      /usr/bin/vi
 
-# for virt-builder:
+# For virt-builder:
 Requires:      gnupg
 Requires:      xz
 #Requires:     nbdkit, nbdkit-plugin-xz
 Requires:      curl
 
-%if 0%{?fedora} >= 23
+# Some Fedora, and all RHEL 7, use XFS:
 Recommends:    libguestfs-xfs
-%endif
+
+# For virt-edit and virt-customize:
+Suggests:      perl
 
 
 %description tools-c
@@ -1425,6 +1427,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Oct 21 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.8-2
+- Add 'Suggests: perl' for virt-edit and virt-customize.
+
 * Wed Oct 12 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.8-1
 - New upstream version 1.35.8.
 
