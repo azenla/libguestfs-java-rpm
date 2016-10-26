@@ -1434,7 +1434,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Wed Oct 26 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.14-1
 - New upstream version 1.35.14.
-
 - Add dbus-devel BR for virt-p2v.
 
 * Fri Oct 21 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.9-1
