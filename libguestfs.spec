@@ -4,13 +4,11 @@
 # I now disable it:
 %global golang_arches NONE
 
-# Architectures that we run the basic sanity-check test.  The full
-# test suite is done after the package has been built.
+# Architectures that we run the basic sanity-check test.
 #
-# Here we only do a sanity check that kernel/qemu/libvirt/appliance is
-# not broken.
-#
-# To perform the full test suite, see instructions here:
+# The full test suite is done after the package has been built.  Here
+# we only do a sanity check that kernel/qemu/libvirt/appliance is not
+# broken.  To perform the full test suite, see instructions here:
 # https://www.redhat.com/archives/libguestfs/2015-September/msg00078.html
 #
 # Currently the basic sanity check is *broken* on:
@@ -20,8 +18,6 @@
 # power64: https://bugzilla.redhat.com/show_bug.cgi?id=1293024
 # x86_64:  https://bugzilla.redhat.com/show_bug.cgi?id=1383451
 %global test_arches %{arm}
-
-%global _hardened_build 1
 
 # Trim older changelog entries.
 # https://lists.fedoraproject.org/pipermail/devel/2013-April/thread.html#181627
@@ -37,7 +33,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.35.14
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -46,10 +42,6 @@ Source0:       http://libguestfs.org/download/1.35-development/%{name}-%{version
 %if 0%{verify_tarball_signature}
 Source1:       http://libguestfs.org/download/1.35-development/%{name}-%{version}.tar.gz.sig
 %endif
-
-# libguestfs live service
-Source2:       guestfsd.service
-Source3:       99-guestfsd.rules
 
 # Replacement README file for Fedora users.
 Source4:       README-replacement.in
@@ -73,7 +65,7 @@ BuildRequires: perl(Pod::Simple)
 BuildRequires: perl(Pod::Man)
 BuildRequires: /usr/bin/pod2text
 BuildRequires: po4a
-BuildRequires: augeas-devel >= 1.0.0-4
+BuildRequires: augeas-devel >= 1.7.0
 BuildRequires: readline-devel
 BuildRequires: genisoimage
 BuildRequires: libxml2-devel
@@ -197,7 +189,7 @@ Requires:      supermin >= 5.1.12
 
 # The daemon dependencies are not included automatically, because it
 # is buried inside the appliance, so list them here.
-Requires:      augeas-libs
+Requires:      augeas-libs >= 1.7.0
 Requires:      libacl
 Requires:      libcap
 Requires:      hivex
@@ -261,11 +253,9 @@ subpackages are:
          libguestfs-tools  virt-* tools, guestfish and guestmount (FUSE)
        libguestfs-tools-c  only the subset of virt tools written in C
                              (for reduced dependencies)
+                 virt-v2v  convert virtual machines to run on KVM (V2V)
+           virt-p2v-maker  convert physical machines to run on KVM (P2V)
                  virt-dib  safe and secure diskimage-builder replacement
-                 virt-v2v  convert virtual machines to run on KVM
-                             (also known as V2V)
-           virt-p2v-maker  convert physical machines to run on KVM
-                             (also known as P2V)
 
 For enhanced features, install:
 
@@ -281,11 +271,18 @@ For enhanced features, install:
            libguestfs-xfs  adds XFS support
            libguestfs-zfs  adds ZFS support
 
+For developers:
+
+         libguestfs-devel  C/C++ header files and library
+  libguestfs-benchmarking  Benchmarking utilities
+
 Language bindings:
 
         erlang-libguestfs  Erlang bindings
  libguestfs-gobject-devel  GObject bindings and GObject Introspection
+%ifarch %{golang_arches}
            golang-guestfs  Go language bindings
+%endif
     libguestfs-java-devel  Java bindings
               lua-guestfs  Lua bindings
    ocaml-libguestfs-devel  OCaml bindings
@@ -294,11 +291,6 @@ Language bindings:
        python2-libguestfs  Python 2 bindings
        python3-libguestfs  Python 3 bindings
           ruby-libguestfs  Ruby bindings
-
-For developers:
-
-         libguestfs-devel  C/C++ header files and library
-  libguestfs-benchmarking  Benchmarking utilities
 
 
 %ifarch aarch64 x86_64
@@ -655,30 +647,6 @@ Install this package if you want intelligent bash tab-completion
 for guestfish, guestmount and various virt-* tools.
 
 
-%package live-service
-Summary:       %{name} live service
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
-
-
-%description live-service
-You can install just this package in virtual machines in order to
-enable libguestfs live service (eg. guestfish --live), which lets you
-safely edit files in running guests.
-
-This daemon is *not* required by %{name}.
-
-
-# https://fedoraproject.org/wiki/Packaging:ScriptletSnippets#Systemd
-%post live-service
-%systemd_post guestfsd.service
-%preun live-service
-%systemd_preun guestfsd.service
-%postun live-service
-%systemd_postun_with_restart guestfsd.service
-
-
 %package -n ocaml-%{name}
 Summary:       OCaml bindings for %{name}
 Requires:      %{name} = %{epoch}:%{version}-%{release}
@@ -926,7 +894,6 @@ fi
   %{configure} \\\
     --with-default-backend=libvirt \\\
     --with-extra="fedora=%{fedora},release=%{release},libvirt" \\\
-    --enable-install-daemon \\\
     $extra
 %ifnarch %{golang_arches}
 %global localconfigure %{localconfigure} --disable-golang
@@ -1052,16 +1019,6 @@ move_to rsync           zz-packages-rsync
 move_to xfsprogs        zz-packages-xfs
 move_to zfs-fuse        zz-packages-zfs
 popd
-
-# For the libguestfs-live-service subpackage install the systemd
-# service and udev rules.
-mkdir -p $RPM_BUILD_ROOT%{_unitdir}
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
-install -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_unitdir}
-install -m 0644 %{SOURCE3} $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
-# This deals with UsrMove:
-mv $RPM_BUILD_ROOT/lib/udev/rules.d/99-guestfs-serial.rules \
-  $RPM_BUILD_ROOT%{_prefix}/lib/udev/rules.d
 
 # Guestfish colour prompts.
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
@@ -1294,15 +1251,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_datadir}/bash-completion/completions/virt-*
 
 
-%files live-service
-%doc COPYING README
-%{_sbindir}/guestfsd
-%{_unitdir}/guestfsd.service
-%{_mandir}/man8/guestfsd.8*
-%{_prefix}/lib/udev/rules.d/99-guestfsd.rules
-%{_prefix}/lib/udev/rules.d/99-guestfs-serial.rules
-
-
 %files -n ocaml-%{name}
 %{_libdir}/ocaml/guestfs
 %exclude %{_libdir}/ocaml/guestfs/*.a
@@ -1432,6 +1380,12 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Nov 11 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.14-3
+- Drop libguestfs-live-service subpackage.
+- Remove setting _hardened_build since it is now the default in Fedora.
+- Some tidying up of the description section.
+- Require Augeas 1.7.0.
+
 * Sat Nov 05 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.14-2
 - Rebuild for OCaml 4.04.0.
 
