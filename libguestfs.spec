@@ -33,7 +33,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.35.14
-Release:       3%{?dist}
+Release:       4%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -189,18 +189,18 @@ Requires:      supermin >= 5.1.12
 
 # The daemon dependencies are not included automatically, because it
 # is buried inside the appliance, so list them here.
-Requires:      augeas-libs >= 1.7.0
-Requires:      libacl
-Requires:      libcap
-Requires:      hivex
-Requires:      pcre
-Requires:      libselinux
-Requires:      systemd-libs
-Requires:      yajl
+Requires:      augeas-libs%{?_isa} >= 1.7.0
+Requires:      libacl%{?_isa}
+Requires:      libcap%{?_isa}
+Requires:      hivex%{?_isa}
+Requires:      pcre%{?_isa}
+Requires:      libselinux%{?_isa}
+Requires:      systemd-libs%{?_isa}
+Requires:      yajl%{?_isa}
 
 # For core inspection API.
 Requires:      libdb-utils
-Requires:      libosinfo
+Requires:      libosinfo%{?_isa}
 
 # For core mount-local (FUSE) API.
 Requires:      fuse
@@ -296,7 +296,7 @@ Language bindings:
 %ifarch aarch64 x86_64
 %package benchmarking
 Summary:       Benchmarking utilities for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 
 %description benchmarking
@@ -309,7 +309,7 @@ small appliances.
 
 %package devel
 Summary:       Development tools and libraries for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      pkgconfig
 
 # For libguestfs-make-fixed-appliance.
@@ -325,7 +325,7 @@ for %{name}.
 %package forensics
 Summary:       Filesystem forensics support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description forensics
 This adds filesystem forensics support to %{name}.  Install it if you
@@ -335,7 +335,7 @@ want to forensically analyze disk images using The Sleuth Kit.
 %package gfs2
 Summary:       GFS2 support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description gfs2
 This adds GFS2 support to %{name}.  Install it if you want to process
@@ -346,7 +346,7 @@ disk images containing GFS2.
 %package hfsplus
 Summary:       HFS+ support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description hfsplus
 This adds HFS+ support to %{name}.  Install it if you want to process
@@ -357,7 +357,7 @@ disk images containing HFS+ / Mac OS Extended filesystems.
 %package jfs
 Summary:       JFS support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description jfs
 This adds JFS support to %{name}.  Install it if you want to process
@@ -367,7 +367,7 @@ disk images containing JFS.
 %package nilfs
 Summary:       NILFS support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description nilfs
 This adds NILFS v2 support to %{name}.  Install it if you want to process
@@ -377,7 +377,7 @@ disk images containing NILFS v2.
 %package reiserfs
 Summary:       ReiserFS support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description reiserfs
 This adds ReiserFS support to %{name}.  Install it if you want to process
@@ -397,7 +397,7 @@ such as ssh, network utilities, editors and debugging utilities.
 %package rsync
 Summary:       rsync support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description rsync
 This adds rsync support to %{name}.  Install it if you want to use
@@ -407,7 +407,7 @@ rsync to upload or download files into disk images.
 %package xfs
 Summary:       XFS support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description xfs
 This adds XFS support to %{name}.  Install it if you want to process
@@ -418,7 +418,7 @@ disk images containing XFS.
 %package zfs
 Summary:       ZFS support for %{name}
 License:       LGPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description zfs
 This adds ZFS support to %{name}.  Install it if you want to process
@@ -449,7 +449,7 @@ having to depend on Perl.  See https://bugzilla.redhat.com/1194158
 %package tools-c
 Summary:       System administration tools for virtual machines
 License:       GPLv2+
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 # For guestfish:
 #Requires:      /usr/bin/emacs #theoretically, but too large
@@ -576,7 +576,7 @@ Windows virtual machines.
 Summary:       Safe and secure diskimage-builder replacement
 License:       GPLv2+
 
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 
 %description -n virt-dib
@@ -589,7 +589,7 @@ diskimage-builder elements.
 Summary:       Convert a virtual machine to run on KVM
 License:       GPLv2+
 
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      %{name}-tools-c = %{epoch}:%{version}-%{release}
 
 Requires:      gawk
@@ -649,7 +649,7 @@ for guestfish, guestmount and various virt-* tools.
 
 %package -n ocaml-%{name}
 Summary:       OCaml bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 
 %description -n ocaml-%{name}
@@ -661,7 +661,7 @@ programs which use %{name} you will also need ocaml-%{name}-devel.
 
 %package -n ocaml-%{name}-devel
 Summary:       OCaml bindings for %{name}
-Requires:      ocaml-%{name} = %{epoch}:%{version}-%{release}
+Requires:      ocaml-%{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 
 %description -n ocaml-%{name}-devel
@@ -671,7 +671,7 @@ required to use the OCaml bindings for %{name}.
 
 %package -n perl-Sys-Guestfs
 Summary:       Perl bindings for %{name} (Sys::Guestfs)
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 
@@ -681,7 +681,7 @@ perl-Sys-Guestfs contains Perl bindings for %{name} (Sys::Guestfs).
 
 %package -n python2-%{name}
 Summary:       Python 2 bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 %{?python_provide:%python_provide python2-%{name}}
 
 
@@ -693,7 +693,7 @@ For Python 3 bindings, install python3-%{name}.
 
 %package -n python3-%{name}
 Summary:       Python 3 bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 %{?python_provide:%python_provide python3-%{name}}
 
 
@@ -705,7 +705,7 @@ For Python 2 bindings, install python2-%{name}.
 
 %package -n ruby-%{name}
 Summary:       Ruby bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      ruby(release)
 Requires:      ruby
 Provides:      ruby(guestfs) = %{version}
@@ -716,7 +716,7 @@ ruby-%{name} contains Ruby bindings for %{name}.
 
 %package java
 Summary:       Java bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      java-headless >= 1.5.0
 Requires:      jpackage-utils
 
@@ -729,7 +729,7 @@ you will also need %{name}-java-devel.
 
 %package java-devel
 Summary:       Java development package for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      %{name}-java = %{epoch}:%{version}-%{release}
 
 %description java-devel
@@ -752,7 +752,7 @@ Requires:      jpackage-utils
 
 %package -n php-%{name}
 Summary:       PHP bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      php
 
 %description -n php-%{name}
@@ -761,7 +761,7 @@ php-%{name} contains PHP bindings for %{name}.
 
 %package -n erlang-%{name}
 Summary:       Erlang bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      erlang-erts
 
 %description -n erlang-%{name}
@@ -770,7 +770,7 @@ erlang-%{name} contains Erlang bindings for %{name}.
 
 %package -n lua-guestfs
 Summary:       Lua bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:      lua
 
 %description -n lua-guestfs
@@ -779,7 +779,7 @@ lua-guestfs contains Lua bindings for %{name}.
 
 %package gobject
 Summary:       GObject bindings for %{name}
-Requires:      %{name} = %{epoch}:%{version}-%{release}
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description gobject
 %{name}-gobject contains GObject bindings for %{name}.
@@ -1380,6 +1380,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Nov 14 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.14-4
+- Use _isa macro on dependencies (except for noarch packages).
+  https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/QSQ7CWSFZ3CRHH7DDGAWVUCB2KFC3OWQ/
+
 * Fri Nov 11 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.14-3
 - Drop libguestfs-live-service subpackage.
 - Remove setting _hardened_build since it is now the default in Fedora.
