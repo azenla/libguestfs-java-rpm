@@ -32,8 +32,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.35.14
-Release:       4%{?dist}
+Version:       1.35.17
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1380,6 +1380,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Sun Dec 11 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.17-1
+- New upstream version 1.35.17.
+
 * Mon Nov 14 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.14-4
 - Use _isa macro on dependencies (except for noarch packages).
   https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/QSQ7CWSFZ3CRHH7DDGAWVUCB2KFC3OWQ/
