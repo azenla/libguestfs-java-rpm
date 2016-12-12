@@ -13,11 +13,9 @@
 #
 # Currently the basic sanity check is *broken* on:
 #
-# aarch64: https://bugzilla.redhat.com/show_bug.cgi?id=1382318
+# arm:     times out when running the test
 # i686:    constantly broken, so I have disabled it, probably forever
-# power64: https://bugzilla.redhat.com/show_bug.cgi?id=1293024
-# x86_64:  https://bugzilla.redhat.com/show_bug.cgi?id=1383451
-%global test_arches %{arm}
+%global test_arches aarch64 %{power64} x86_64
 
 # Trim older changelog entries.
 # https://lists.fedoraproject.org/pipermail/devel/2013-April/thread.html#181627
