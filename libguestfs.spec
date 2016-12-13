@@ -15,8 +15,7 @@
 #
 # arm:     times out when running the test
 # i686:    constantly broken, so I have disabled it, probably forever
-# power64: https://bugzilla.redhat.com/show_bug.cgi?id=1403745
-%global test_arches aarch64 x86_64
+%global test_arches aarch64 power64 x86_64
 
 # Trim older changelog entries.
 # https://lists.fedoraproject.org/pipermail/devel/2013-April/thread.html#181627
