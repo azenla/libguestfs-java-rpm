@@ -31,7 +31,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.35.19
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1378,6 +1378,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Jan 12 2017 Vít Ondruch <vondruch@redhat.com> - 1:1.35.19-2
+- Rebuilt for https://fedoraproject.org/wiki/Changes/Ruby_2.4
+
 * Sat Dec 24 2016 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.19-1
 - New upstream version 1.35.19.
 
