@@ -32,7 +32,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.35.20
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1019,6 +1019,17 @@ move_to xfsprogs        zz-packages-xfs
 move_to zfs-fuse        zz-packages-zfs
 popd
 
+# If there is a bogus dependency on kernel-*, rename it to 'kernel'
+# instead.  This can happen for various reasons:
+# - DNF picks kernel-debug instead of kernel.
+# - Version of kernel-rt in brew > version of kernel.
+# On all known architectures, depending on 'kernel' should
+# mean "we need a kernel".
+pushd $RPM_BUILD_ROOT%{_libdir}/guestfs/supermin.d
+sed 's/^kernel-.*/kernel/' < packages > packages-t
+mv packages-t packages
+popd
+
 # Guestfish colour prompts.
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
@@ -1379,6 +1390,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Feb 02 2017 Pino Toscano <ptoscano@redhat.com> - 1:1.35.20-2
+- Avoid spurious dependencies on kernel-debug etc.
+
 * Sat Jan 28 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.35.20-1
 - New upstream version 1.35.20.
 
