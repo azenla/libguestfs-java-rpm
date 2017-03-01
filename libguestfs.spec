@@ -38,9 +38,9 @@ License:       LGPLv2+
 
 # Source and patches.
 URL:           http://libguestfs.org/
-Source0:       http://libguestfs.org/download/1.36-stable/%{name}-%{version}.tar.gz
+Source0:       http://libguestfs.org/download/1.34-stable/%{name}-%{version}.tar.gz
 %if 0%{verify_tarball_signature}
-Source1:       http://libguestfs.org/download/1.36-stable/%{name}-%{version}.tar.gz.sig
+Source1:       http://libguestfs.org/download/1.34-stable/%{name}-%{version}.tar.gz.sig
 %endif
 
 # Replacement README file for Fedora users.
