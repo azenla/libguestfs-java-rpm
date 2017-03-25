@@ -16,7 +16,8 @@
 # arm:     times out when running the test
 # aarch64: "MSI is not supported by interrupt controller" (RHBZ#1414081)
 # i686:    constantly broken, so I have disabled it, probably forever
-%global test_arches %{power64} x86_64
+# ppc64le: kernel doesn't boot on qemu (RHBZ#1435873)
+%global test_arches ppc64 x86_64
 
 # Trim older changelog entries.
 # https://lists.fedoraproject.org/pipermail/devel/2013-April/thread.html#181627
