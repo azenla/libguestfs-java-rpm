@@ -200,7 +200,7 @@ Requires:      yajl%{?_isa}
 
 # For core inspection API.
 Requires:      libdb-utils
-Requires:      libosinfo%{?_isa}
+Requires:      osinfo-db
 
 # For core mount-local (FUSE) API.
 Requires:      fuse
