@@ -459,7 +459,8 @@ Requires:      /usr/bin/man
 Requires:      /usr/bin/vi
 
 # For virt-builder:
-Requires:      gnupg
+Requires:      gnupg2
+#Requires:     (gnupg or gnupg2) # Fedora packaging rules forbid this
 Requires:      xz
 #Requires:     nbdkit, nbdkit-plugin-xz
 Requires:      curl
