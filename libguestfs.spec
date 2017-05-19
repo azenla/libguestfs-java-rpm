@@ -29,6 +29,10 @@
 # Filter perl provides
 %{?perl_default_filter}
 
+# s390utils-base is uninstallable in Rawhide at the moment.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1452792
+ExcludeArch:   s390x
+
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
