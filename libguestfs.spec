@@ -29,12 +29,6 @@
 # Filter perl provides
 %{?perl_default_filter}
 
-# qemu is broken on ppc64 and ppc64le.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1452813
-# s390utils-base is uninstallable in Rawhide at the moment.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1452792
-ExcludeArch:   %{power64} s390x
-
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
