@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.14
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1395,6 +1395,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Jun 06 2017 Jitka Plesnikova <jplesnik@redhat.com> - 1:1.37.14-3
+- Perl 5.26 rebuild
+
 * Mon May 22 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.14-2
 - Bump release and rebuild for ppc64, ppc64le and s390x.
 
