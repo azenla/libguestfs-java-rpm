@@ -1356,6 +1356,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_includedir}/guestfs-gobject/*.h
 %{_datadir}/gir-1.0/Guestfs-1.0.gir
 %{_libdir}/pkgconfig/libguestfs-gobject-1.0.pc
+%{_mandir}/man3/guestfs-gobject.3*
 
 
 %ifarch %{golang_arches}
@@ -1383,6 +1384,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 * Tue Jul 11 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.17-2
 - New upstream version 1.37.17.
 - Drop libguestfs-gobject-doc because gtk-doc is no longer provided upstream.
+- Add new man page guestfs-gobject(3) to libguestfs-gobject-devel.
 
 * Mon Jun 26 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.16-2
 - OCaml 4.04.2 rebuild.
