@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.17
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -795,23 +795,12 @@ To develop software against these bindings, you need to install
 %package gobject-devel
 Summary:       GObject bindings for %{name}
 Requires:      %{name}-gobject = %{epoch}:%{version}-%{release}
-Requires:      gtk-doc
 
 %description gobject-devel
 %{name}-gobject contains GObject bindings for %{name}.
 
 This package is needed if you want to write software using the
 GObject bindings.  It also contains GObject Introspection information.
-
-
-%package gobject-doc
-Summary:       Documentation for %{name} GObject bindings
-BuildArch:     noarch
-Requires:      %{name}-gobject-devel = %{epoch}:%{version}-%{release}
-
-%description gobject-doc
-%{name}-gobject-doc contains documentation for
-%{name} GObject bindings.
 
 
 %ifarch %{golang_arches}
@@ -1369,10 +1358,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_libdir}/pkgconfig/libguestfs-gobject-1.0.pc
 
 
-%files gobject-doc
-%{_datadir}/gtk-doc/html/guestfs
-
-
 %ifarch %{golang_arches}
 %files -n golang-guestfs
 %doc golang/examples/*.go
@@ -1395,8 +1380,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
-* Tue Jul 11 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.17-1
+* Tue Jul 11 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.17-2
 - New upstream version 1.37.17.
+- Drop libguestfs-gobject-doc because gtk-doc is no longer provided upstream.
 
 * Mon Jun 26 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.16-2
 - OCaml 4.04.2 rebuild.
