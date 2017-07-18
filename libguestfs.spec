@@ -35,8 +35,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.37.17
-Release:       2%{?dist}
+Version:       1.37.18
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1381,6 +1381,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Jul 18 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.18-1
+- New upstream version 1.37.18.
+
 * Tue Jul 11 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.17-2
 - New upstream version 1.37.17.
 - Drop libguestfs-gobject-doc because gtk-doc is no longer provided upstream.
