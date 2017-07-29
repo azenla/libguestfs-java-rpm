@@ -64,6 +64,7 @@ Source7:       libguestfs.keyring
 BuildRequires: gcc
 BuildRequires: supermin-devel >= 5.1.12-4
 BuildRequires: hivex-devel >= 1.2.7-7
+BuildRequires: ocaml-hivex
 BuildRequires: perl(Pod::Simple)
 BuildRequires: perl(Pod::Man)
 BuildRequires: /usr/bin/pod2text
