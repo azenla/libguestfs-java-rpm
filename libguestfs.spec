@@ -35,8 +35,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.37.19
-Release:       2%{?dist}
+Version:       1.37.20
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1382,6 +1382,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Aug 04 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.20-1
+- New upstream version 1.37.20.
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.37.19-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
