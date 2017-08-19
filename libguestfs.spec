@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.21
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -170,7 +170,7 @@ BuildRequires: acl attr augeas-libs bash binutils btrfs-progs bzip2 coreutils cp
 %ifnarch ppc
 BuildRequires: hfsplus-tools
 %endif
-%ifnarch s390 s390x %{arm} aarch64
+%ifnarch %{arm} aarch64 s390 s390x
 # http://zfs-fuse.net/issues/94
 BuildRequires: zfs-fuse
 %endif
@@ -418,7 +418,7 @@ This adds XFS support to %{name}.  Install it if you want to process
 disk images containing XFS.
 
 
-%ifnarch %{arm} aarch64
+%ifnarch %{arm} aarch64 s390 s390x
 %package zfs
 Summary:       ZFS support for %{name}
 License:       LGPLv2+
@@ -1137,7 +1137,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %files xfs
 %{_libdir}/guestfs/supermin.d/zz-packages-xfs
 
-%ifnarch %{arm} aarch64
+%ifnarch %{arm} aarch64 s390 s390x
 %files zfs
 %{_libdir}/guestfs/supermin.d/zz-packages-zfs
 %endif
@@ -1382,6 +1382,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Sat Aug 19 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.21-2
+- Disable zfs subpackage on s390, s390x.
+
 * Wed Aug 09 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.21-1
 - New upstream version 1.37.21.
 
