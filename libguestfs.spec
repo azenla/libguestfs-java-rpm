@@ -179,9 +179,6 @@ BuildRequires: ntfs-3g ntfsprogs
 BuildRequires: syslinux syslinux-extlinux
 %endif
 
-# Minimum version containing fix for armv7 pwritev bug (RHBZ#1346070).
-BuildRequires: glibc >= 2.23.90-24.fc25
-
 # For building the appliance.
 Requires:      supermin >= 5.1.18
 
