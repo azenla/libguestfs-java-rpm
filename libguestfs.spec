@@ -62,7 +62,7 @@ Source7:       libguestfs.keyring
 
 # Basic build requirements for the library and virt tools.
 BuildRequires: gcc
-BuildRequires: supermin-devel >= 5.1.12-4
+BuildRequires: supermin-devel >= 5.1.18
 BuildRequires: hivex-devel >= 1.2.7-7
 BuildRequires: ocaml-hivex-devel
 BuildRequires: perl(Pod::Simple)
@@ -179,17 +179,11 @@ BuildRequires: ntfs-3g ntfsprogs
 BuildRequires: syslinux syslinux-extlinux
 %endif
 
-# For complicated reasons, this is required so that
-# /bin/kernel-install puts the kernel directly into /boot, instead of
-# into a /boot/<machine-id> subdirectory (in Fedora >= 23).  Read the
-# kernel-install script to understand why.
-BuildRequires: grubby
-
 # Minimum version containing fix for armv7 pwritev bug (RHBZ#1346070).
 BuildRequires: glibc >= 2.23.90-24.fc25
 
 # For building the appliance.
-Requires:      supermin >= 5.1.12
+Requires:      supermin >= 5.1.18
 
 # The daemon dependencies are not included automatically, because it
 # is buried inside the appliance, so list them here.
