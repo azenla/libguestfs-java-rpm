@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.28
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -263,6 +263,7 @@ For enhanced features, install:
       libguestfs-reiserfs  adds ReiserFS support
         libguestfs-rescue  enhances virt-rescue shell with more tools
          libguestfs-rsync  rsync to/from guest filesystems
+           libguestfs-ufs  adds UFS (BSD) support
            libguestfs-xfs  adds XFS support
            libguestfs-zfs  adds ZFS support
 
@@ -397,6 +398,16 @@ Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 %description rsync
 This adds rsync support to %{name}.  Install it if you want to use
 rsync to upload or download files into disk images.
+
+
+%package ufs
+Summary:       UFS (BSD) support for %{name}
+License:       LGPLv2+
+Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
+
+%description ufs
+This adds UFS support to %{name}.  Install it if you want to process
+disk images containing UFS (BSD filesystems).
 
 
 %package xfs
@@ -1003,6 +1014,10 @@ move_to vim-minimal     zz-packages-rescue
 move_to rsync           zz-packages-rsync
 move_to xfsprogs        zz-packages-xfs
 move_to zfs-fuse        zz-packages-zfs
+
+# On Fedora you need kernel-modules-extra to be able to mount
+# UFS (BSD) filesystems.
+echo "kernel-modules-extra" > zz-packages-ufs
 popd
 
 # If there is a bogus dependency on kernel-*, rename it to 'kernel'
@@ -1124,6 +1139,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 %files rescue
 %{_libdir}/guestfs/supermin.d/zz-packages-rescue
+
+%files ufs
+%{_libdir}/guestfs/supermin.d/zz-packages-ufs
 
 %files xfs
 %{_libdir}/guestfs/supermin.d/zz-packages-xfs
@@ -1373,6 +1391,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Oct 05 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.28-2
+- Add libguestfs-ufs (BSD) subpackage.
+
 * Thu Sep 28 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.28-1
 - New upstream version 1.37.28.
 
