@@ -35,8 +35,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.37.28
-Release:       2%{?dist}
+Version:       1.37.29
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1391,6 +1391,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Oct 10 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.29-1
+- New upstream version 1.37.29.
+
 * Thu Oct 05 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.28-2
 - Add libguestfs-ufs (BSD) subpackage.
 
