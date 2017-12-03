@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.34
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -59,6 +59,9 @@ Source6:       yum.conf.in
 %if 0%{verify_tarball_signature}
 Source7:       libguestfs.keyring
 %endif
+
+# Upstream patch to fix locking on NBD drives.
+Patch1:        0001-launch-direct-Omit-locking-option-for-non-file-disks.patch
 
 # Basic build requirements for the library and virt tools.
 BuildRequires: gcc
@@ -1391,6 +1394,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Sun Dec  3 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.34-3
+- Fix locking on NBD drives.
+
 * Fri Nov 17 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.34-2
 - OCaml 4.06.0 rebuild.
 

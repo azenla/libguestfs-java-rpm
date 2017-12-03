@@ -1,0 +1,36 @@
+From 35320dd0edb94d09d231bcded57aa883a5e7c784 Mon Sep 17 00:00:00 2001
+From: Lars Seipel <ls@slrz.net>
+Date: Thu, 23 Nov 2017 06:15:28 +0100
+Subject: [PATCH] launch: direct: Omit locking option for non-file disks
+ (RHBZ#1516094)
+
+QEMU does not accept options unrecognized by the block driver
+in use. Disable locking only for read-only disks that are
+file-backed, as that's the only block driver it is supported
+with.
+
+Signed-off-by: Lars Seipel <ls@slrz.net>
+---
+ lib/launch-direct.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/lib/launch-direct.c b/lib/launch-direct.c
+index 87ac121c7..678c8c68d 100644
+--- a/lib/launch-direct.c
++++ b/lib/launch-direct.c
+@@ -260,7 +260,11 @@ add_drive_standard_params (guestfs_h *g, struct backend_direct_data *data,
+     append_list ("cache=unsafe");
+     if (drv->disk_label)
+       append_list_format ("serial=%s", drv->disk_label);
+-    if (data->qemu_mandatory_locking)
++
++    /* Add the file-specific locking option only for files, as qemu
++     * won't accept options unknown to the block driver in use.
++     */
++    if (data->qemu_mandatory_locking && drv->src.protocol == drive_protocol_file)
+       append_list ("file.backing.file.locking=off");
+   }
+ 
+-- 
+2.15.1
+
