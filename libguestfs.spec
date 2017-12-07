@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.34
-Release:       3%{?dist}
+Release:       4%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -62,6 +62,9 @@ Source7:       libguestfs.keyring
 
 # Upstream patch to fix locking on NBD drives.
 Patch1:        0001-launch-direct-Omit-locking-option-for-non-file-disks.patch
+
+# Upstream patch to remove <shareable/> for libvirt >= 3.10.
+Patch2:        0001-lib-libvirt-stop-using-shareable-for-appliance-disk-.patch
 
 # Basic build requirements for the library and virt tools.
 BuildRequires: gcc
@@ -1394,6 +1397,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Dec  7 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.34-4
+- Remove <shareable/> for libvirt >= 3.10.
+
 * Sun Dec  3 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.34-3
 - Fix locking on NBD drives.
 
