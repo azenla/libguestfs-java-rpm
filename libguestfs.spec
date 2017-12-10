@@ -1175,6 +1175,8 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/virt-alignment-scan.1*
 %{_bindir}/virt-builder
 %{_mandir}/man1/virt-builder.1*
+%{_bindir}/virt-builder-repository
+%{_mandir}/man1/virt-builder-repository.1*
 %{_bindir}/virt-cat
 %{_mandir}/man1/virt-cat.1*
 %{_bindir}/virt-copy-in
@@ -1394,6 +1396,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 * Sun Dec 10 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.35-1
 - New upstream version 1.37.35.
 - Remove upstream patches.
+- Add virt-builder-repository and man page.
 
 * Thu Dec  7 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.34-4
 - Remove <shareable/> for libvirt >= 3.10.
