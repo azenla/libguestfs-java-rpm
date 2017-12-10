@@ -60,12 +60,6 @@ Source6:       yum.conf.in
 Source7:       libguestfs.keyring
 %endif
 
-# Upstream patch to fix locking on NBD drives.
-Patch1:        0001-launch-direct-Omit-locking-option-for-non-file-disks.patch
-
-# Upstream patch to remove <shareable/> for libvirt >= 3.10.
-Patch2:        0001-lib-libvirt-stop-using-shareable-for-appliance-disk-.patch
-
 # Basic build requirements for the library and virt tools.
 BuildRequires: gcc
 BuildRequires: supermin-devel >= 5.1.18
@@ -1399,6 +1393,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Sun Dec 10 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.35-1
 - New upstream version 1.37.35.
+- Remove upstream patches.
 
 * Thu Dec  7 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.34-4
 - Remove <shareable/> for libvirt >= 3.10.
