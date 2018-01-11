@@ -63,6 +63,7 @@ Source7:       libguestfs.keyring
 # Basic build requirements for the library and virt tools.
 BuildRequires: gcc
 BuildRequires: rpcgen
+BuildRequires: libtirpc-devel
 BuildRequires: supermin-devel >= 5.1.18
 BuildRequires: hivex-devel >= 1.2.7-7
 BuildRequires: ocaml-hivex-devel
@@ -1395,7 +1396,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 %changelog
 * Thu Jan 11 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.35-2
-- Add BR rpcgen and rebuild against updated Ruby.
+- Add BR rpcgen, libtirpc-devel and rebuild against updated Ruby.
 
 * Sun Dec 10 2017 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.35-1
 - New upstream version 1.37.35.
