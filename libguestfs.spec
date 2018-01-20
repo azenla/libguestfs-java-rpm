@@ -36,7 +36,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.37.35
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1395,6 +1395,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Sat Jan 20 2018 Björn Esser <besser82@fedoraproject.org> - 1:1.37.35-3
+- Rebuilt for switch to libxcrypt
+
 * Thu Jan 11 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.35-2
 - Add BR rpcgen, libtirpc-devel and rebuild against updated Ruby.
 
