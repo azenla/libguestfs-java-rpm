@@ -35,8 +35,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.37.35
-Release:       3%{?dist}
+Version:       1.37.36
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1395,6 +1395,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Jan 25 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.36-1
+- New upstream version 1.37.36.
+
 * Sat Jan 20 2018 Björn Esser <besser82@fedoraproject.org> - 1:1.37.35-3
 - Rebuilt for switch to libxcrypt
 
