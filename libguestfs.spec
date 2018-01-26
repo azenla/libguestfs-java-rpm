@@ -29,8 +29,11 @@
 # Verify tarball signature with GPGv2 (only possible for stable branches).
 %global verify_tarball_signature %{nil}
 
-# Filter perl provides
+# Filter perl provides.
 %{?perl_default_filter}
+
+# Unbreak the linker.
+%undefine _strict_symbol_defs_build
 
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
@@ -1397,6 +1400,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Thu Jan 25 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.36-1
 - New upstream version 1.37.36.
+- Unbreak the linker.
 
 * Sat Jan 20 2018 Björn Esser <besser82@fedoraproject.org> - 1:1.37.35-3
 - Rebuilt for switch to libxcrypt
