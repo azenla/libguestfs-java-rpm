@@ -27,7 +27,7 @@
 %global _changelog_trimtime %(date +%s -d "2 years ago")
 
 # Verify tarball signature with GPGv2 (only possible for stable branches).
-%global verify_tarball_signature %{nil}
+%global verify_tarball_signature 1
 
 # Filter perl provides.
 %{?perl_default_filter}
@@ -44,9 +44,9 @@ License:       LGPLv2+
 
 # Source and patches.
 URL:           http://libguestfs.org/
-Source0:       http://libguestfs.org/download/1.35-development/%{name}-%{version}.tar.gz
+Source0:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz
 %if 0%{verify_tarball_signature}
-Source1:       http://libguestfs.org/download/1.35-development/%{name}-%{version}.tar.gz.sig
+Source1:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz.sig
 %endif
 
 # Replacement README file for Fedora users.
@@ -1400,6 +1400,8 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Fri Feb 09 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.38.0-1
 - New upstream version 1.38.0.
+- Enable tarball signing since we are on a stable branch.
+- Fix Source URLs.
 
 * Tue Feb 06 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.37.37-1
 - New upstream version 1.37.37.
