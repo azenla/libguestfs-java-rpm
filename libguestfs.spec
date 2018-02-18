@@ -64,7 +64,7 @@ Source7:       libguestfs.keyring
 %endif
 
 # Basic build requirements for the library and virt tools.
-BuildRequires: gcc
+BuildRequires: gcc, gcc-c++
 BuildRequires: rpcgen
 BuildRequires: libtirpc-devel
 BuildRequires: supermin-devel >= 5.1.18
