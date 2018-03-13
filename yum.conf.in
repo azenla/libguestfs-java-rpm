@@ -7,6 +7,7 @@ obsoletes=1
 gpgcheck=0
 assumeyes=1
 reposdir=/dev/null
+modulesdir=@PWD@/modules
 
 [local]
 name=local
