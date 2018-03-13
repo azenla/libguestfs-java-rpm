@@ -103,7 +103,7 @@ BuildRequires: perl(Expect)
 BuildRequires: libacl-devel
 BuildRequires: libcap-devel
 BuildRequires: libldm-devel
-BuildRequires: yajl-devel
+BuildRequires: jansson-devel
 BuildRequires: systemd-devel
 BuildRequires: bash-completion
 BuildRequires: /usr/bin/ping
