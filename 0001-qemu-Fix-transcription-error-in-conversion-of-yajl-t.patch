@@ -1,0 +1,29 @@
+From e79286f71738d9385157d9e87211be02645722c3 Mon Sep 17 00:00:00 2001
+From: "Richard W.M. Jones" <rjones@redhat.com>
+Date: Thu, 29 Mar 2018 20:18:34 +0100
+Subject: [PATCH] qemu: Fix transcription error in conversion of yajl to
+ jansson.
+
+This broke qemu mandatory locking detection.
+
+Fixes commit bd1c5c9f4dcf38458099db8a0bf4659a07ef055d.
+---
+ lib/qemu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/qemu.c b/lib/qemu.c
+index a50eca988..3e7f15946 100644
+--- a/lib/qemu.c
++++ b/lib/qemu.c
+@@ -616,7 +616,7 @@ guestfs_int_qemu_mandatory_locking (guestfs_h *g,
+       members = json_object_get (v, "members");
+       if (json_is_array (members)) {
+         json_array_foreach (members, j, m) {
+-          name = json_object_get (v, "name");
++          name = json_object_get (m, "name");
+           if (json_is_string (name) &&
+               STREQ (json_string_value (name), "locking"))
+             return 1;
+-- 
+2.15.1
+

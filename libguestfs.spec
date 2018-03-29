@@ -39,7 +39,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.2
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -48,6 +48,9 @@ Source0:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar
 %if 0%{verify_tarball_signature}
 Source1:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz.sig
 %endif
+
+# Upstream patch fixes qemu mandatory locking detection.
+Patch1:        0001-qemu-Fix-transcription-error-in-conversion-of-yajl-t.patch
 
 # Replacement README file for Fedora users.
 Source4:       README-replacement.in
@@ -1398,6 +1401,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Mar 29 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.2-2
+- Add patch to fix detection of qemu mandatory locking.
+
 * Thu Mar 29 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.2-1
 - New upstream version 1.39.2.
 
