@@ -39,7 +39,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.2
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -142,7 +142,7 @@ BuildRequires: perl(Module::Build)
 BuildRequires: perl(ExtUtils::CBuilder)
 BuildRequires: perl(Locale::TextDomain)
 BuildRequires: python2-devel
-BuildRequires: libvirt-python
+BuildRequires: python2-libvirt
 BuildRequires: python3-devel
 BuildRequires: libvirt-python3
 BuildRequires: ruby-devel
@@ -1401,6 +1401,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Apr 10 2018 Iryna Shcherbina <shcherbina.iryna@gmail.com> - 1:1.39.2-3
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Thu Mar 29 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.2-2
 - Add patch to fix detection of qemu mandatory locking.
 
