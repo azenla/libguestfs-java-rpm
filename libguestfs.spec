@@ -998,6 +998,10 @@ gzip --best installed-docs/*.xml
 pushd $RPM_BUILD_ROOT%{_libdir}/guestfs/supermin.d
 function move_to
 {
+    if ! grep -Esq "^$1$" packages; then
+        echo "move_to $1: package name not found in packages file"
+        exit 1
+    fi
     grep -Ev "^$1$" < packages > packages-t
     mv packages-t packages
     echo "$1" >> "$2"
