@@ -1025,7 +1025,9 @@ move_to strace          zz-packages-rescue
 move_to vim-minimal     zz-packages-rescue
 move_to rsync           zz-packages-rsync
 move_to xfsprogs        zz-packages-xfs
+%ifnarch %{arm} aarch64 s390 s390x
 move_to zfs-fuse        zz-packages-zfs
+%endif
 
 # On Fedora you need kernel-modules-extra to be able to mount
 # UFS (BSD) filesystems.
