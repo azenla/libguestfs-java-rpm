@@ -16,11 +16,12 @@
 # arm:     times out when running the test
 # aarch64: "MSI is not supported by interrupt controller" (RHBZ#1414081)
 # i686:    constantly broken, so I have disabled it, probably forever
+# ppc64:   guestfsd segfaults
 # ppc64le: kernel doesn't boot on qemu (RHBZ#1435873)
 # s390x:   qemu TCG cannot emulate enough to boot the kernel
 #            (however KVM would work if it was available in Koji, so this
 #            is not a bug)
-%global test_arches ppc64 x86_64
+%global test_arches x86_64
 
 # Trim older changelog entries.
 # https://lists.fedoraproject.org/pipermail/devel/2013-April/thread.html#181627
