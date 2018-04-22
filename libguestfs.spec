@@ -49,9 +49,6 @@ Source0:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar
 Source1:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz.sig
 %endif
 
-# Upstream patch fixes qemu mandatory locking detection.
-Patch1:        0001-qemu-Fix-transcription-error-in-conversion-of-yajl-t.patch
-
 # Replacement README file for Fedora users.
 Source4:       README-replacement.in
 
@@ -1409,6 +1406,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Sun Apr 22 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.3-1
 - New upstream version 1.39.3.
+- Remove upstream patch.
 
 * Tue Apr 10 2018 Iryna Shcherbina <shcherbina.iryna@gmail.com> - 1:1.39.2-3
 - Update Python 2 dependency declarations to new packaging standards
