@@ -39,7 +39,7 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.39.3
+Version:       1.39.4
 Release:       1%{?dist}
 License:       LGPLv2+
 
@@ -1405,6 +1405,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Wed May 02 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.4-1
+- New upstream version 1.39.4.
+
 * Sun Apr 22 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.3-1
 - New upstream version 1.39.3.
 - Remove upstream patch.
