@@ -201,7 +201,6 @@ Requires:      yajl%{?_isa}
 
 # For core inspection API.
 Requires:      libdb-utils
-Requires:      osinfo-db
 
 # For core mount-local (FUSE) API.
 Requires:      fuse
@@ -476,6 +475,9 @@ Requires:      gnupg2
 Requires:      xz
 #Requires:     nbdkit, nbdkit-plugin-xz
 Requires:      curl
+
+# For virt-builder-repository:
+Suggests:      osinfo-db
 
 # Some Fedora, and all RHEL 7, use XFS:
 Recommends:    libguestfs-xfs
