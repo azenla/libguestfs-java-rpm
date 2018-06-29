@@ -1278,6 +1278,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_datadir}/bash-completion/completions/guestfish
 %{_datadir}/bash-completion/completions/guestmount
 %{_datadir}/bash-completion/completions/guestunmount
+%{_datadir}/bash-completion/completions/libguestfs-test-tool
 %{_datadir}/bash-completion/completions/virt-*
 
 
@@ -1409,6 +1410,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Fri Jun 29 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.6-1
 - New upstream version 1.39.6.
+- Add new bash-completion script for libguestfs-test-tool.
 
 * Wed Jun 20 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.5-5
 - Bump release and rebuild.
