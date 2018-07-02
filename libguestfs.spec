@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.6
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1408,6 +1408,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Jul 02 2018 Miro Hrončok <mhroncok@redhat.com> - 1:1.39.6-3
+- Rebuilt for Python 3.7
+
 * Fri Jun 29 2018 Jitka Plesnikova <jplesnik@redhat.com> - 1:1.39.6-2
 - Perl 5.28 rebuild
 
