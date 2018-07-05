@@ -139,7 +139,7 @@ BuildRequires: perl(Test::Pod::Coverage) >= 1.00
 BuildRequires: perl(Module::Build)
 BuildRequires: perl(ExtUtils::CBuilder)
 BuildRequires: perl(Locale::TextDomain)
-BuildRequires: python2-devel
+BuildRequires: python2-devel, python-unversioned-command
 BuildRequires: python2-libvirt
 BuildRequires: python3-devel
 BuildRequires: libvirt-python3
@@ -1402,6 +1402,8 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 * Thu Jul 05 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.6-5
 - Remove ldconfig
   https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/SU3LJVDZ7LUSJGZR5MS72BMRAFP3PQQL/
+- BR on python-unversioned-command
+  https://fedoraproject.org/wiki/Changes/Move_usr_bin_python_into_separate_package
 
 * Tue Jul 03 2018 Petr Pisar <ppisar@redhat.com> - 1:1.39.6-4
 - Perl 5.28 rebuild
