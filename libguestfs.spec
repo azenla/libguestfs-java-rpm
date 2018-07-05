@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.6
-Release:       4%{?dist}
+Release:       5%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1077,15 +1077,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %find_lang %{name}
 
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
-%post java -p /sbin/ldconfig
-
-%postun java -p /sbin/ldconfig
-
-
 %files -f %{name}.lang
 %doc COPYING README
 %{_bindir}/libguestfs-test-tool
@@ -1408,6 +1399,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Jul 05 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.6-5
+- Remove ldconfig
+  https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/SU3LJVDZ7LUSJGZR5MS72BMRAFP3PQQL/
+
 * Tue Jul 03 2018 Petr Pisar <ppisar@redhat.com> - 1:1.39.6-4
 - Perl 5.28 rebuild
 
