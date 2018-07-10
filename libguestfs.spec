@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.6
-Release:       5%{?dist}
+Release:       6%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -768,7 +768,8 @@ Requires:      jpackage-utils
 %package -n php-%{name}
 Summary:       PHP bindings for %{name}
 Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:      php
+Requires:	php(zend-abi) = %{php_zend_api}
+Requires:	php(api) = %{php_core_api}
 
 %description -n php-%{name}
 php-%{name} contains PHP bindings for %{name}.
@@ -1399,6 +1400,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Jul 10 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.6-6
+- Update PHP dependencies.
+
 * Thu Jul 05 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.6-5
 - Remove ldconfig
   https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/SU3LJVDZ7LUSJGZR5MS72BMRAFP3PQQL/
