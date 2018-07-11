@@ -294,7 +294,6 @@ Language bindings:
           ruby-libguestfs  Ruby bindings
 
 
-%ifarch aarch64 x86_64
 %package benchmarking
 Summary:       Benchmarking utilities for %{name}
 Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
@@ -305,7 +304,6 @@ Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 performance analysis of %{name}, and also for general
 understanding of the performance of the kernel and qemu when booting
 small appliances.
-%endif
 
 
 %package devel
@@ -1064,7 +1062,6 @@ rm -r $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs/dllv2v_test_harness*
 # Remove the .gitignore file from ocaml/html which will be copied to docdir.
 rm ocaml/html/.gitignore
 
-%ifarch aarch64 x86_64
 # Copy the benchmarking tools and man pages, since upstream doesn't
 # install them by default.  NB Don't install the libtool wrapper scripts.
 libtool --mode=install install -m 0755 utils/boot-analysis/boot-analysis $RPM_BUILD_ROOT%{_bindir}/libguestfs-boot-analysis
@@ -1072,7 +1069,6 @@ libtool --mode=install install -m 0755 utils/boot-benchmark/boot-benchmark $RPM_
 install -m 0755 utils/boot-benchmark/boot-benchmark-range.pl $RPM_BUILD_ROOT%{_bindir}/libguestfs-boot-benchmark-range.pl
 install -m 0644 utils/boot-analysis/boot-analysis.1 $RPM_BUILD_ROOT%{_mandir}/man1/libguestfs-boot-analysis.1
 install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/man1/libguestfs-boot-benchmark.1
-%endif
 
 # Find locale files.
 %find_lang %{name}
@@ -1092,14 +1088,12 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/libguestfs-test-tool.1*
 
 
-%ifarch aarch64 x86_64
 %files benchmarking
 %{_bindir}/libguestfs-boot-analysis
 %{_bindir}/libguestfs-boot-benchmark
 %{_bindir}/libguestfs-boot-benchmark-range.pl
 %{_mandir}/man1/libguestfs-boot-analysis.1*
 %{_mandir}/man1/libguestfs-boot-benchmark.1*
-%endif
 
 
 %files devel
