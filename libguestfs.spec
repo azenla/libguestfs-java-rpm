@@ -1246,7 +1246,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %files -n virt-v2v
-%doc COPYING README v2v/TODO
+%doc COPYING README
 %{_bindir}/virt-v2v
 %{_bindir}/virt-v2v-copy-to-local
 %{_mandir}/man1/virt-v2v.1*
@@ -1405,6 +1405,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Sat Jul 14 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.7-1
 - New upstream version 1.39.7.
+- v2v/TODO was removed upstream.
 
 * Fri Jul 13 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.6-10
 - v2v: Recommends nbdkit and the Python 3 plugin.
