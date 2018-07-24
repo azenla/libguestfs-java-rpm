@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.7
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1403,6 +1403,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Jul 24 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.7-2
+- Rebuild for unannounced soname bump in libconfig.
+
 * Sat Jul 14 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.7-1
 - New upstream version 1.39.7.
 - v2v/TODO was removed upstream.
