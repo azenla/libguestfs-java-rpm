@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.7
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -614,7 +614,7 @@ Requires:      curl
 Requires:      /usr/bin/virsh
 
 # -it vddk and -o rhv-upload need nbdkit.
-Recommends:    nbdkit, nbdkit-plugin-python3
+Recommends:    nbdkit, nbdkit-plugin-python3, nbdkit-plugin-vddk
 
 # For rhsrvany.exe, used to install firstboot scripts in Windows guests.
 Requires:      mingw32-srvany >= 1.0-13
@@ -1403,6 +1403,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Jul 26 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.7-3
+- v2v: Recommends nbdkit-plugin-vddk for -it vddk mode.
+
 * Tue Jul 24 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.7-2
 - Rebuild for unannounced soname bump in libconfig.
 
