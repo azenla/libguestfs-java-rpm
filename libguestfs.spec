@@ -39,8 +39,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.39.7
-Release:       3%{?dist}
+Version:       1.39.8
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1403,6 +1403,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Jul 27 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.8-1
+- New upstream version 1.39.8.
+
 * Thu Jul 26 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.7-3
 - v2v: Recommends nbdkit-plugin-vddk for -it vddk mode.
 
