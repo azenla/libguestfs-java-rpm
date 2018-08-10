@@ -16,7 +16,7 @@
 # arm:     times out when running the test
 # aarch64: "MSI is not supported by interrupt controller" (RHBZ#1414081)
 # i686:    constantly broken, so I have disabled it, probably forever
-# ppc64:   guestfsd segfaults
+# ppc64:   qemu doesn't work with TCG (RHBZ#1614948)
 # ppc64le: kernel doesn't boot on qemu (RHBZ#1435873)
 # s390x:   qemu TCG cannot emulate enough to boot the kernel
 #            (however KVM would work if it was available in Koji, so this
