@@ -1,0 +1,12 @@
+# https://fedoraproject.org/wiki/CI/Tests
+# https://fedoraproject.org/wiki/CI/Standard_Test_Roles
+- hosts: localhost
+  roles:
+  - role: standard-test-basic
+    tags:
+    - classic
+    tests:
+    - libguestfs-test-tool:
+      run: libguestfs-test-tool
+    required_packages:
+    - libguestfs
