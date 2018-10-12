@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.11
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -214,6 +214,7 @@ Requires:      libvirt-daemon-kvm >= 0.10.2-3
 %else
 Requires:      libvirt-daemon-qemu >= 0.10.2-3
 %endif
+Recommends:    libvirt-daemon-config-network
 Requires:      selinux-policy >= 3.11.1-63
 
 # For UML backend (this backend only works on x86).
@@ -1403,6 +1404,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Oct 12 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.11-2
+- lib: Add Recommends for libvirt-daemon-config-network so that networking
+  works out of the box.
+
 * Sat Sep 22 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.11-1
 - New upstream version 1.39.11.
 
