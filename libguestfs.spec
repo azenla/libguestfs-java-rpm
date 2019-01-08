@@ -50,6 +50,9 @@ Source0:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar
 Source1:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz.sig
 %endif
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1664318
+Patch1:        0001-lib-Use-qemu-img-info-U-option-to-avoid-locking-erro.patch
+
 # Replacement README file for Fedora users.
 Source4:       README-replacement.in
 
@@ -1404,6 +1407,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Jan 08 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.11-3
+- Small fix for qemu behaviour (RHBZ#1664318).
+
 * Fri Oct 12 2018 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.11-2
 - lib: Add Recommends for libvirt-daemon-config-network so that networking
   works out of the box.
