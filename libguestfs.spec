@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.39.11
-Release:       3%{?dist}
+Release:       4%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -1407,6 +1407,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Jan 14 2019 Björn Esser <besser82@fedoraproject.org> - 1:1.39.11-4
+- Rebuilt for libcrypt.so.2 (#1666033)
+
 * Tue Jan 08 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.39.11-3
 - Small fix for qemu behaviour (RHBZ#1664318).
 
