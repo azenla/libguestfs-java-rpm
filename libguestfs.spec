@@ -1252,6 +1252,12 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_bindir}/virt-v2v-copy-to-local
 %{_mandir}/man1/virt-v2v.1*
 %{_mandir}/man1/virt-v2v-copy-to-local.1*
+%{_mandir}/man1/virt-v2v-input-vmware.1*
+%{_mandir}/man1/virt-v2v-input-xen.1*
+%{_mandir}/man1/virt-v2v-output-local.1*
+%{_mandir}/man1/virt-v2v-output-openstack.1*
+%{_mandir}/man1/virt-v2v-output-rhv.1*
+%{_mandir}/man1/virt-v2v-support.1*
 %{_mandir}/man1/virt-v2v-test-harness.1*
 %{_datadir}/virt-tools
 
@@ -1407,6 +1413,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 * Thu Jan 17 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.1-1
 - New upstream version 1.40.1.
 - Remove patch which is now upstream.
+- Add new virt-v2v man pages.
 
 * Mon Jan 14 2019 Björn Esser <besser82@fedoraproject.org> - 1:1.39.11-4
 - Rebuilt for libcrypt.so.2 (#1666033)
