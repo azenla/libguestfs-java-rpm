@@ -50,9 +50,6 @@ Source0:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar
 Source1:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz.sig
 %endif
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1664318
-Patch1:        0001-lib-Use-qemu-img-info-U-option-to-avoid-locking-erro.patch
-
 # Replacement README file for Fedora users.
 Source4:       README-replacement.in
 
@@ -1409,6 +1406,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Thu Jan 17 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.1-1
 - New upstream version 1.40.1.
+- Remove patch which is now upstream.
 
 * Mon Jan 14 2019 Björn Esser <besser82@fedoraproject.org> - 1:1.39.11-4
 - Rebuilt for libcrypt.so.2 (#1666033)
