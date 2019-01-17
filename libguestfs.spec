@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.40.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -903,6 +903,7 @@ fi
   %{configure} \\\
     --with-default-backend=libvirt \\\
     --with-extra="fedora=%{fedora},release=%{release},libvirt" \\\
+    --with-virt-v2v-nbdkit-python-plugin=python3 \\\
     $extra
 %ifnarch %{golang_arches}
 %global localconfigure %{localconfigure} --disable-golang
@@ -1410,6 +1411,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Jan 17 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.1-2
+- nbdkit Python3 plugin is called "python3" in Fedora, adjust configure line.
+
 * Thu Jan 17 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.1-1
 - New upstream version 1.40.1.
 - Remove patch which is now upstream.
