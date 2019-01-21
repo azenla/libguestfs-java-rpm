@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.40.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -176,7 +176,7 @@ BuildRequires: acl attr augeas-libs bash binutils btrfs-progs bzip2 coreutils cp
 %ifnarch ppc
 BuildRequires: hfsplus-tools
 %endif
-%ifnarch %{arm} aarch64 s390 s390x
+%ifnarch %{arm} aarch64 s390 s390x riscv64
 # http://zfs-fuse.net/issues/94
 BuildRequires: zfs-fuse
 %endif
@@ -426,7 +426,7 @@ This adds XFS support to %{name}.  Install it if you want to process
 disk images containing XFS.
 
 
-%ifnarch %{arm} aarch64 s390 s390x
+%ifnarch %{arm} aarch64 s390 s390x riscv64
 %package zfs
 Summary:       ZFS support for %{name}
 License:       LGPLv2+
@@ -1031,7 +1031,7 @@ move_to strace          zz-packages-rescue
 move_to vim-minimal     zz-packages-rescue
 move_to rsync           zz-packages-rsync
 move_to xfsprogs        zz-packages-xfs
-%ifnarch %{arm} aarch64 s390 s390x
+%ifnarch %{arm} aarch64 s390 s390x riscv64
 move_to zfs-fuse        zz-packages-zfs
 %endif
 
@@ -1157,7 +1157,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %files xfs
 %{_libdir}/guestfs/supermin.d/zz-packages-xfs
 
-%ifnarch %{arm} aarch64 s390 s390x
+%ifnarch %{arm} aarch64 s390 s390x riscv64
 %files zfs
 %{_libdir}/guestfs/supermin.d/zz-packages-zfs
 %endif
@@ -1411,6 +1411,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Jan 21 2019 David Abdurachmanov <david.abdurachmanov@gmail.com> - 1:1.40.1-3
+- Disable ZFS for RISC-V (riscv64)
+
 * Thu Jan 17 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.1-2
 - nbdkit Python3 plugin is called "python3" in Fedora, adjust configure line.
 
