@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.40.2
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -139,8 +139,6 @@ BuildRequires: perl(Test::Pod::Coverage) >= 1.00
 BuildRequires: perl(Module::Build)
 BuildRequires: perl(ExtUtils::CBuilder)
 BuildRequires: perl(Locale::TextDomain)
-BuildRequires: python2-devel, python-unversioned-command
-BuildRequires: python2-libvirt
 BuildRequires: python3-devel
 BuildRequires: libvirt-python3
 BuildRequires: ruby-devel
@@ -290,7 +288,6 @@ Language bindings:
    ocaml-libguestfs-devel  OCaml bindings
          perl-Sys-Guestfs  Perl bindings
            php-libguestfs  PHP bindings
-       python2-libguestfs  Python 2 bindings
        python3-libguestfs  Python 3 bindings
           ruby-libguestfs  Ruby bindings
 
@@ -615,7 +612,7 @@ Requires:      curl
 Requires:      /usr/bin/virsh
 
 # -it vddk and -o rhv-upload need nbdkit.
-Recommends:    nbdkit, nbdkit-plugin-python3, nbdkit-plugin-vddk
+Recommends:    nbdkit, nbdkit-python-plugin, nbdkit-vddk-plugin
 
 # For rhsrvany.exe, used to install firstboot scripts in Windows guests.
 Requires:      mingw32-srvany >= 1.0-13
@@ -698,18 +695,6 @@ Requires:      perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $versio
 perl-Sys-Guestfs contains Perl bindings for %{name} (Sys::Guestfs).
 
 
-%package -n python2-%{name}
-Summary:       Python 2 bindings for %{name}
-Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-%{?python_provide:%python_provide python2-%{name}}
-
-
-%description -n python2-%{name}
-python2-%{name} contains Python 2 bindings for %{name}.
-
-For Python 3 bindings, install python3-%{name}.
-
-
 %package -n python3-%{name}
 Summary:       Python 3 bindings for %{name}
 Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
@@ -718,8 +703,6 @@ Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description -n python3-%{name}
 python3-%{name} contains Python 3 bindings for %{name}.
-
-For Python 2 bindings, install python2-%{name}.
 
 
 %package -n ruby-%{name}
@@ -860,14 +843,6 @@ gpgv2 --homedir "$tmphome" --keyring %{SOURCE7} %{SOURCE1} %{SOURCE0}
 %setup -q
 %autopatch -p1
 
-# For Python 3 we must build libguestfs twice.  This creates:
-#   %{name}-%{version}/
-#   %{name}-%{version}-python3/
-# with a second copy of the sources in the python3 subdir.
-pushd ..
-cp -a %{name}-%{version} %{name}-%{version}-python3
-popd
-
 # For sVirt to work, the local temporary directory we use in the tests
 # must be labelled the same way as /tmp.  This doesn't work if either
 # the directory is on NFS (no SELinux labels) or if SELinux is
@@ -899,15 +874,14 @@ else
   extra=--with-supermin-packager-config=$(pwd)/yum.conf
 fi
 
-%global localconfigure \
-  %{configure} \\\
-    --with-default-backend=libvirt \\\
-    --with-extra="fedora=%{fedora},release=%{release},libvirt" \\\
-    --with-virt-v2v-nbdkit-python-plugin=python3 \\\
-    $extra
+%{configure} \
+  PYTHON=%{__python3} \
+  --with-default-backend=libvirt \
+  --with-extra="fedora=%{fedora},release=%{release},libvirt" \
 %ifnarch %{golang_arches}
-%global localconfigure %{localconfigure} --disable-golang
+  --disable-golang \
 %endif
+  $extra
 
 # Building index-parse.c by hand works around a race condition in the
 # autotools cruft, where two or more copies of yacc race with each
@@ -915,21 +889,8 @@ fi
 #
 # 'INSTALLDIRS' ensures that Perl and Ruby libs are installed in the
 # vendor dir not the site dir.
-%global localmake \
-  make -j1 -C builder index-parse.c \
-  make V=1 INSTALLDIRS=vendor %{?_smp_mflags}
-
-%{localconfigure}
-%{localmake}
-
-# For Python 3 we must compile libguestfs a second time.
-pushd ../%{name}-%{version}-python3
-export PYTHON=%{__python3}
-# Copy the cache to speed the build:
-cp ../%{name}-%{version}/generator/.pod2text* generator/
-%{localconfigure} --enable-python --enable-perl --disable-ruby --disable-haskell --disable-php --disable-erlang --disable-lua --disable-golang --disable-gobject
-%{localmake}
-popd
+make -j1 -C builder index-parse.c
+make V=1 INSTALLDIRS=vendor %{?_smp_mflags}
 
 
 %check
@@ -955,11 +916,6 @@ gzip -9 ChangeLog
 # 'INSTALLDIRS' ensures that Perl and Ruby libs are installed in the
 # vendor dir not the site dir.
 make DESTDIR=$RPM_BUILD_ROOT INSTALLDIRS=vendor install
-
-# Install Python 3 bindings which were built in a subdirectory.
-pushd ../%{name}-%{version}-python3
-make DESTDIR=$RPM_BUILD_ROOT INSTALLDIRS=vendor -C python install
-popd
 
 # Delete static libraries.
 rm $( find $RPM_BUILD_ROOT -name '*.a' | grep -v /ocaml/ )
@@ -1311,15 +1267,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man3/guestfs-perl.3*
 
 
-%files -n python2-%{name}
-%doc python/examples/*.py
-%{python2_sitearch}/libguestfsmod.so
-%{python2_sitearch}/guestfs.py
-%{python2_sitearch}/guestfs.pyc
-%{python2_sitearch}/guestfs.pyo
-%{_mandir}/man3/guestfs-python.3*
-
-
 %files -n python3-%{name}
 %doc python/examples/*.py
 %{python3_sitearch}/libguestfsmod*.so
@@ -1411,6 +1358,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Thu Mar 07 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.2-3
+- Remove Python 2 bindings completely.
+  https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
+
 * Sun Feb 17 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:1.40.2-2
 - Rebuild for readline 8.0
 
