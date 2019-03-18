@@ -40,7 +40,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.40.2
-Release:       3%{?dist}
+Release:       4%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -148,9 +148,6 @@ BuildRequires: rubygem(json)
 BuildRequires: rubygem(rdoc)
 BuildRequires: rubygem(test-unit)
 BuildRequires: ruby-irb
-BuildRequires: java-1.8.0-openjdk
-BuildRequires: java-1.8.0-openjdk-devel
-BuildRequires: jpackage-utils
 BuildRequires: php-devel
 BuildRequires: erlang-erts
 BuildRequires: erlang-erl_interface
@@ -283,7 +280,6 @@ Language bindings:
 %ifarch %{golang_arches}
            golang-guestfs  Go language bindings
 %endif
-    libguestfs-java-devel  Java bindings
               lua-guestfs  Lua bindings
    ocaml-libguestfs-devel  OCaml bindings
          perl-Sys-Guestfs  Perl bindings
@@ -716,42 +712,6 @@ Provides:      ruby(guestfs) = %{version}
 ruby-%{name} contains Ruby bindings for %{name}.
 
 
-%package java
-Summary:       Java bindings for %{name}
-Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:      java-headless >= 1.5.0
-Requires:      jpackage-utils
-
-%description java
-%{name}-java contains Java bindings for %{name}.
-
-If you want to develop software in Java which uses %{name}, then
-you will also need %{name}-java-devel.
-
-
-%package java-devel
-Summary:       Java development package for %{name}
-Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:      %{name}-java = %{epoch}:%{version}-%{release}
-
-%description java-devel
-%{name}-java-devel contains the tools for developing Java software
-using %{name}.
-
-See also %{name}-javadoc.
-
-
-%package javadoc
-Summary:       Java documentation for %{name}
-BuildArch:     noarch
-Requires:      %{name} = %{epoch}:%{version}-%{release}
-Requires:      %{name}-java = %{epoch}:%{version}-%{release}
-Requires:      jpackage-utils
-
-%description javadoc
-%{name}-javadoc contains the Java documentation for %{name}.
-
-
 %package -n php-%{name}
 Summary:       PHP bindings for %{name}
 Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
@@ -881,6 +841,7 @@ fi
 %ifnarch %{golang_arches}
   --disable-golang \
 %endif
+  --without-java \
   $extra
 
 # Building index-parse.c by hand works around a race condition in the
@@ -936,11 +897,6 @@ rm $RPM_BUILD_ROOT%{_bindir}/virt-tar
 rm $RPM_BUILD_ROOT%{_mandir}/man1/virt-list-filesystems.1*
 rm $RPM_BUILD_ROOT%{_mandir}/man1/virt-list-partitions.1*
 rm $RPM_BUILD_ROOT%{_mandir}/man1/virt-tar.1*
-
-# Don't use versioned jar file (RHBZ#1022133).
-# See: https://bugzilla.redhat.com/show_bug.cgi?id=1022184#c4
-mv $RPM_BUILD_ROOT%{_datadir}/java/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_datadir}/java/%{name}.jar
 
 # golang: Ignore what libguestfs upstream installs, and just copy the
 # source files to %{_datadir}/gocode/src.
@@ -1283,21 +1239,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man3/guestfs-ruby.3*
 
 
-%files java
-%{_libdir}/libguestfs_jni*.so.*
-%{_datadir}/java/*.jar
-
-
-%files java-devel
-%doc java/examples/*.java
-%{_libdir}/libguestfs_jni*.so
-%{_mandir}/man3/guestfs-java.3*
-
-
-%files javadoc
-%{_javadocdir}/%{name}
-
-
 %files -n php-%{name}
 %doc php/README-PHP
 %dir %{_sysconfdir}/php.d
@@ -1358,6 +1299,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Mar 18 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.2-4
+- Remove Java bindings.
+  https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/CW4XMOIKMNRRPAZ4H2ER7VPBY6YV2ODL/#YHTZ7IGVTKPWCBOY5C6UW7BMX7F35R5Q
+
 * Thu Mar 07 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.2-3
 - Remove Python 2 bindings completely.
   https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
