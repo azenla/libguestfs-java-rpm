@@ -30,6 +30,9 @@
 # Verify tarball signature with GPGv2 (only possible for stable branches).
 %global verify_tarball_signature %{nil}
 
+# If there are patches which touch autotools files, set this to 1.
+%global patches_touch_autotools 1
+
 # Filter perl provides.
 %{?perl_default_filter}
 
@@ -62,6 +65,10 @@ Source6:       yum.conf.in
 # Keyring used to verify tarball signature.
 %if 0%{verify_tarball_signature}
 Source7:       libguestfs.keyring
+%endif
+
+%if 0%{patches_touch_autotools}
+BuildRequires: autoconf, automake, libtool, gettext-devel
 %endif
 
 # Basic build requirements for the library and virt tools.
@@ -802,6 +809,10 @@ gpgv2 --homedir "$tmphome" --keyring %{SOURCE7} %{SOURCE1} %{SOURCE0}
 %endif
 %setup -q
 %autopatch -p1
+
+%if 0%{patches_touch_autotools}
+autoreconf -i
+%endif
 
 # For sVirt to work, the local temporary directory we use in the tests
 # must be labelled the same way as /tmp.  This doesn't work if either
