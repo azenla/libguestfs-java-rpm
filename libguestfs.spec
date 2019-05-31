@@ -43,7 +43,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.40.2
-Release:       4%{?dist}
+Release:       5%{?dist}
 License:       LGPLv2+
 
 # Source and patches.
@@ -66,6 +66,9 @@ Source6:       yum.conf.in
 %if 0%{verify_tarball_signature}
 Source7:       libguestfs.keyring
 %endif
+
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1705482
+Patch0001:     0001-python-PYTHON_LIBS-is-not-set-in-Python-3.8-RHBZ-170.patch
 
 %if 0%{patches_touch_autotools}
 BuildRequires: autoconf, automake, libtool, gettext-devel
@@ -1310,6 +1313,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri May 31 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.2-5
+- Add proposed patch for Python 3.8 (RHBZ#1705482).
+
 * Mon Mar 18 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.40.2-4
 - Remove Java bindings.
   https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/CW4XMOIKMNRRPAZ4H2ER7VPBY6YV2ODL/#YHTZ7IGVTKPWCBOY5C6UW7BMX7F35R5Q
