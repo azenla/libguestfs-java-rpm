@@ -15,7 +15,6 @@
 #
 # arm:     times out when running the test
 # aarch64: "MSI is not supported by interrupt controller" (RHBZ#1414081)
-# i686:    constantly broken, so I have disabled it, probably forever
 # ppc64:   qemu doesn't work with TCG (RHBZ#1614948)
 # ppc64le: kernel doesn't boot on qemu (RHBZ#1435873)
 # s390x:   qemu TCG cannot emulate enough to boot the kernel
@@ -45,6 +44,9 @@ Epoch:         1
 Version:       1.40.2
 Release:       7%{?dist}
 License:       LGPLv2+
+
+# No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
+ExcludeArch:   i686
 
 # Source and patches.
 URL:           http://libguestfs.org/
@@ -1315,6 +1317,8 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %changelog
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.40.2-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+- Disable the package entirely on i686 because there is no kernel
+  https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
 
 * Fri May 31 2019 Jitka Plesnikova <jplesnik@redhat.com> - 1:1.40.2-6
 - Perl 5.30 rebuild
