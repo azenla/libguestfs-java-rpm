@@ -41,8 +41,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.40.2
-Release:       10%{?dist}
+Version:       1.41.4
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -68,9 +68,6 @@ Source6:       yum.conf.in
 %if 0%{verify_tarball_signature}
 Source7:       libguestfs.keyring
 %endif
-
-# See https://bugzilla.redhat.com/show_bug.cgi?id=1705482
-Patch0001:     0001-python-PYTHON_LIBS-is-not-set-in-Python-3.8-RHBZ-170.patch
 
 %if 0%{patches_touch_autotools}
 BuildRequires: autoconf, automake, libtool, gettext-devel
@@ -1315,6 +1312,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Sep 02 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.4-1
+- New upstream version 1.41.4.
+
 * Mon Aug 19 2019 Miro Hrončok <mhroncok@redhat.com> - 1:1.40.2-10
 - Rebuilt for Python 3.8
 
