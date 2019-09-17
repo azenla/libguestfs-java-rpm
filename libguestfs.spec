@@ -120,8 +120,6 @@ BuildRequires: /usr/bin/ping
 BuildRequires: /usr/bin/wget
 BuildRequires: curl
 BuildRequires: xz
-BuildRequires: gtk3-devel
-BuildRequires: dbus-devel
 BuildRequires: /usr/bin/qemu-img
 BuildRequires: perl(Win::Hivex)
 BuildRequires: perl(Win::Hivex::Regedit)
@@ -259,7 +257,7 @@ subpackages are:
        libguestfs-tools-c  only the subset of virt tools written in C
                              (for reduced dependencies)
                  virt-v2v  convert virtual machines to run on KVM (V2V)
-           virt-p2v-maker  convert physical machines to run on KVM (P2V)
+                 virt-p2v  convert physical machines to run on KVM (P2V)
                  virt-dib  safe and secure diskimage-builder replacement
 
 For enhanced features, install:
@@ -627,33 +625,7 @@ Requires:      mingw32-srvany >= 1.0-13
 Virt-v2v converts virtual machines from non-KVM hypervisors
 to run under KVM.
 
-To convert physical machines, see the virt-p2v-maker package.
-
-
-%package -n virt-p2v-maker
-Summary:       Convert a physical machine to run on KVM
-License:       GPLv2+
-
-Requires:      gawk
-Requires:      gzip
-
-# virt-p2v-make-disk runs virt-builder:
-Requires:      %{name}-tools-c = %{epoch}:%{version}-%{release}
-
-# virt-p2v-make-kickstart runs strip:
-Requires:      binutils
-
-
-%description -n virt-p2v-maker
-Virt-p2v converts (virtualizes) physical machines so they can be run
-as virtual machines under KVM.
-
-This package contains the tools needed to make a virt-p2v boot CD or
-USB key which is booted on the physical machine to perform the
-conversion.  You also need virt-v2v installed somewhere else to
-complete the conversion.
-
-To convert virtual machines from other hypervisors, see virt-v2v.
+To convert physical machines, see the virt-p2v package.
 
 
 %package bash-completion
@@ -994,6 +966,10 @@ rm -r $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs/dllv2v_test_harness*
 # Remove the .gitignore file from ocaml/html which will be copied to docdir.
 rm ocaml/html/.gitignore
 
+# Delete virt-p2v bash completion files, as virt-p2v was moved
+# to its own source.
+rm $RPM_BUILD_ROOT%{_datadir}/bash-completion/completions/virt-p2v-*
+
 %ifarch aarch64 x86_64
 # Copy the benchmarking tools and man pages, since upstream doesn't
 # install them by default.  NB Don't install the libtool wrapper scripts.
@@ -1188,19 +1164,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_datadir}/virt-tools
 
 
-%files -n virt-p2v-maker
-%doc COPYING README
-%{_bindir}/virt-p2v-make-disk
-%{_bindir}/virt-p2v-make-kickstart
-%{_bindir}/virt-p2v-make-kiwi
-%{_mandir}/man1/virt-p2v.1*
-%{_mandir}/man1/virt-p2v-make-disk.1*
-%{_mandir}/man1/virt-p2v-make-kickstart.1*
-%{_mandir}/man1/virt-p2v-make-kiwi.1*
-%{_datadir}/virt-p2v
-%{_libdir}/virt-p2v
-
-
 %files bash-completion
 %dir %{_datadir}/bash-completion/completions
 %{_datadir}/bash-completion/completions/guestfish
@@ -1312,6 +1275,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Sep 17 2019 Pino Toscano <ptoscano@redhat.com> - 1:1.41.4-2
+- Drop virt-p2v (virt-p2v-maker subpackage), which is now built from
+  its own source.
+
 * Mon Sep 02 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.4-1
 - New upstream version 1.41.4.
 
