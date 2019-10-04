@@ -42,7 +42,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.41.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -1275,6 +1275,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Oct 04 2019 Remi Collet <remi@remirepo.net> - 1:1.41.4-2
+- rebuild for https://fedoraproject.org/wiki/Changes/php74
+
 * Tue Sep 17 2019 Pino Toscano <ptoscano@redhat.com> - 1:1.41.4-2
 - Drop virt-p2v (virt-p2v-maker subpackage), which is now built from
   its own source.
