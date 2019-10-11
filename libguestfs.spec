@@ -966,10 +966,6 @@ rm -r $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs/dllv2v_test_harness*
 # Remove the .gitignore file from ocaml/html which will be copied to docdir.
 rm ocaml/html/.gitignore
 
-# Delete virt-p2v bash completion files, as virt-p2v was moved
-# to its own source.
-rm $RPM_BUILD_ROOT%{_datadir}/bash-completion/completions/virt-p2v-*
-
 %ifarch aarch64 x86_64
 # Copy the benchmarking tools and man pages, since upstream doesn't
 # install them by default.  NB Don't install the libtool wrapper scripts.
