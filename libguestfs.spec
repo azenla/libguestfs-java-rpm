@@ -26,11 +26,14 @@
 # https://lists.fedoraproject.org/pipermail/devel/2013-April/thread.html#181627
 %global _changelog_trimtime %(date +%s -d "2 years ago")
 
-# Verify tarball signature with GPGv2 (only possible for stable branches).
-%global verify_tarball_signature %{nil}
+# Verify tarball signature with GPGv2.
+%global verify_tarball_signature 1
 
 # If there are patches which touch autotools files, set this to 1.
-%global patches_touch_autotools 1
+%global patches_touch_autotools %{nil}
+
+# The source directory.
+%global source_directory 1.41-development
 
 # Filter perl provides.
 %{?perl_default_filter}
@@ -41,7 +44,7 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.41.5
+Version:       1.41.8
 Release:       1%{?dist}
 License:       LGPLv2+
 
@@ -50,9 +53,9 @@ ExcludeArch:   i686
 
 # Source and patches.
 URL:           http://libguestfs.org/
-Source0:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz
+Source0:       http://libguestfs.org/download/%{source_directory}/%{name}-%{version}.tar.gz
 %if 0%{verify_tarball_signature}
-Source1:       http://libguestfs.org/download/1.38-stable/%{name}-%{version}.tar.gz.sig
+Source1:       http://libguestfs.org/download/%{source_directory}/%{name}-%{version}.tar.gz.sig
 %endif
 
 # Replacement README file for Fedora users.
@@ -238,11 +241,10 @@ Conflicts:     libguestfs-winsupport
 Libguestfs is a library for accessing and modifying virtual machine
 disk images.  http://libguestfs.org
 
-It can be used to make batch configuration changes to guests, get
-disk used/free statistics (virt-df), migrate between hypervisors
-(virt-p2v, virt-v2v), perform backups and guest clones, change
-registry/UUID/hostname info, build guests from scratch (virt-builder)
-and much more.
+It can be used to make batch configuration changes to guests, get disk
+used/free statistics (virt-df), perform backups and guest clones,
+change registry/UUID/hostname info, build guests from scratch
+(virt-builder) and much more.
 
 Libguestfs uses Linux kernel and qemu code, and can access any type of
 guest filesystem that Linux and qemu can, including but not limited
@@ -256,8 +258,6 @@ subpackages are:
          libguestfs-tools  virt-* tools, guestfish and guestmount (FUSE)
        libguestfs-tools-c  only the subset of virt tools written in C
                              (for reduced dependencies)
-                 virt-v2v  convert virtual machines to run on KVM (V2V)
-                 virt-p2v  convert physical machines to run on KVM (P2V)
                  virt-dib  safe and secure diskimage-builder replacement
 
 For enhanced features, install:
@@ -601,33 +601,6 @@ diskimage-builder command.  It is compatible with most
 diskimage-builder elements.
 
 
-%package -n virt-v2v
-Summary:       Convert a virtual machine to run on KVM
-License:       GPLv2+
-
-Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:      %{name}-tools-c = %{epoch}:%{version}-%{release}
-
-Requires:      gawk
-Requires:      gzip
-Requires:      unzip
-Requires:      curl
-Requires:      /usr/bin/virsh
-
-# -it vddk and -o rhv-upload need nbdkit.
-Recommends:    nbdkit, nbdkit-python-plugin, nbdkit-vddk-plugin
-
-# For rhsrvany.exe, used to install firstboot scripts in Windows guests.
-Requires:      mingw32-srvany >= 1.0-13
-
-
-%description -n virt-v2v
-Virt-v2v converts virtual machines from non-KVM hypervisors
-to run under KVM.
-
-To convert physical machines, see the virt-p2v package.
-
-
 %package bash-completion
 Summary:       Bash tab-completion scripts for %{name} tools
 BuildArch:     noarch
@@ -952,17 +925,6 @@ popd
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 
-# Virt-tools data directory.  This contains a symlink to rhsrvany.exe
-# which is satisfied by the dependency on mingw32-srvany.
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/virt-tools
-pushd $RPM_BUILD_ROOT%{_datadir}/virt-tools
-ln -sf /usr/i686-w64-mingw32/sys-root/mingw/bin/rhsrvany.exe
-popd
-
-# Delete the v2v test harness (except for the man page).
-rm -r $RPM_BUILD_ROOT%{_libdir}/ocaml/v2v_test_harness
-rm -r $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs/dllv2v_test_harness*
-
 # Remove the .gitignore file from ocaml/html which will be copied to docdir.
 rm ocaml/html/.gitignore
 
@@ -989,7 +951,8 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/guestfs-faq.1*
 %{_mandir}/man1/guestfs-performance.1*
 %{_mandir}/man1/guestfs-recipes.1*
-%{_mandir}/man1/guestfs-release-notes.1*
+%{_mandir}/man1/guestfs-release-notes-1*.1*
+%{_mandir}/man1/guestfs-release-notes-historical.1*
 %{_mandir}/man1/guestfs-security.1*
 %{_mandir}/man1/libguestfs-test-tool.1*
 
@@ -1144,22 +1107,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_libdir}/guestfs/supermin.d/zz-packages-dib
 
 
-%files -n virt-v2v
-%doc COPYING README
-%{_bindir}/virt-v2v
-%{_bindir}/virt-v2v-copy-to-local
-%{_mandir}/man1/virt-v2v.1*
-%{_mandir}/man1/virt-v2v-copy-to-local.1*
-%{_mandir}/man1/virt-v2v-input-vmware.1*
-%{_mandir}/man1/virt-v2v-input-xen.1*
-%{_mandir}/man1/virt-v2v-output-local.1*
-%{_mandir}/man1/virt-v2v-output-openstack.1*
-%{_mandir}/man1/virt-v2v-output-rhv.1*
-%{_mandir}/man1/virt-v2v-support.1*
-%{_mandir}/man1/virt-v2v-test-harness.1*
-%{_datadir}/virt-tools
-
-
 %files bash-completion
 %dir %{_datadir}/bash-completion/completions
 %{_datadir}/bash-completion/completions/guestfish
@@ -1271,6 +1218,10 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Tue Nov 19 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-1
+- New upstream version 1.41.8.
+- virt-v2v is now in a separate project.
+
 * Fri Oct 11 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.5-1
 - New upstream version 1.41.5.
 
