@@ -159,8 +159,6 @@ BuildRequires: rubygem(rdoc)
 BuildRequires: rubygem(test-unit)
 BuildRequires: ruby-irb
 BuildRequires: php-devel
-BuildRequires: erlang-erts
-BuildRequires: erlang-erl_interface
 BuildRequires: gobject-introspection-devel
 BuildRequires: gjs
 %ifarch %{golang_arches}
@@ -282,7 +280,6 @@ For developers:
 
 Language bindings:
 
-        erlang-libguestfs  Erlang bindings
  libguestfs-gobject-devel  GObject bindings and GObject Introspection
 %ifarch %{golang_arches}
            golang-guestfs  Go language bindings
@@ -674,15 +671,6 @@ Requires:	php(api) = %{php_core_api}
 
 %description -n php-%{name}
 php-%{name} contains PHP bindings for %{name}.
-
-
-%package -n erlang-%{name}
-Summary:       Erlang bindings for %{name}
-Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-Requires:      erlang-erts
-
-%description -n erlang-%{name}
-erlang-%{name} contains Erlang bindings for %{name}.
 
 
 %package -n lua-guestfs
@@ -1165,15 +1153,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_libdir}/php/modules/guestfs_php.so
 
 
-%files -n erlang-%{name}
-%doc erlang/README
-%doc erlang/examples/*.erl
-%doc erlang/examples/LICENSE
-%{_bindir}/erl-guestfs
-%{_libdir}/erlang/lib/%{name}-%{version}
-%{_mandir}/man3/guestfs-erlang.3*
-
-
 %files -n lua-guestfs
 %doc lua/examples/*.lua
 %doc lua/examples/LICENSE
@@ -1221,6 +1200,7 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 * Tue Nov 19 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-1
 - New upstream version 1.41.8.
 - virt-v2v is now in a separate project.
+- Drop erlang bindings.
 
 * Fri Oct 11 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.5-1
 - New upstream version 1.41.5.
