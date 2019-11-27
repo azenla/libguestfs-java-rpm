@@ -45,7 +45,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.41.8
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -739,8 +739,7 @@ for %{name}.
 
 %prep
 %if 0%{verify_tarball_signature}
-tmphome="$(mktemp -d)"
-gpgv2 --homedir "$tmphome" --keyring %{SOURCE7} %{SOURCE1} %{SOURCE0}
+%{gpgverify} --keyring='%{SOURCE7}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 %endif
 %setup -q
 %autopatch -p1
@@ -1197,6 +1196,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Wed Nov 27 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-2
+- Use gpgverify macro instead of explicit gpgv2 command.
+
 * Tue Nov 19 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-1
 - New upstream version 1.41.8.
 - virt-v2v is now in a separate project.
