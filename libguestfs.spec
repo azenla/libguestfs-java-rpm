@@ -45,7 +45,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.41.8
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -1196,6 +1196,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Fri Dec 06 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-3
+- OCaml 4.09.0 (final) rebuild.
+
 * Wed Nov 27 2019 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-2
 - Use gpgverify macro instead of explicit gpgv2 command.
 
