@@ -211,12 +211,16 @@ Requires:      fuse
 # For core disk-create API.
 Requires:      /usr/bin/qemu-img
 
-# For libvirt backend.
-%ifarch %{ix86} x86_64 %{arm} aarch64
-Requires:      libvirt-daemon-kvm >= 0.10.2-3
-%else
-Requires:      libvirt-daemon-qemu >= 0.10.2-3
-%endif
+# For qemu direct and libvirt backends.
+Requires:      qemu-kvm-core
+Suggests:      qemu-block-curl
+Suggests:      qemu-block-gluster
+Suggests:      qemu-block-iscsi
+Suggests:      qemu-block-rbd
+Suggests:      qemu-block-ssh
+Requires:      libvirt-daemon-driver-qemu
+Requires:      libvirt-daemon-driver-secret
+Recommends:    libvirt-daemon-driver-storage-core
 Recommends:    libvirt-daemon-config-network
 Requires:      selinux-policy >= 3.11.1-63
 
