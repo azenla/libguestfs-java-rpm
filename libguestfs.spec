@@ -45,7 +45,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.41.8
-Release:       4%{?dist}
+Release:       5%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -1200,6 +1200,9 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Sun Jan 19 2020 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-5
+- OCaml 4.10.0+beta1 rebuild.
+
 * Sat Jan 18 2020 Mamoru TASAKA <mtasaka@fedoraproject.org> - 1:1.41.8-4
 - F-32: rebuild against ruby27
 
