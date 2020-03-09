@@ -33,7 +33,7 @@
 %global patches_touch_autotools %{nil}
 
 # The source directory.
-%global source_directory 1.41-development
+%global source_directory 1.42-stable
 
 # Filter perl provides.
 %{?perl_default_filter}
@@ -44,8 +44,8 @@
 Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
-Version:       1.41.8
-Release:       9%{?dist}
+Version:       1.42.0
+Release:       1%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -75,6 +75,9 @@ Source7:       libguestfs.keyring
 %if 0%{patches_touch_autotools}
 BuildRequires: autoconf, automake, libtool, gettext-devel
 %endif
+
+# Upstream patch which fixes build from tarball.
+Patch1:        0001-po-Remove-virt-v2v-related-dependency-from-POTFILES-.patch
 
 # Basic build requirements for the library and virt tools.
 BuildRequires: gcc, gcc-c++
@@ -161,6 +164,7 @@ BuildRequires: ruby-irb
 BuildRequires: php-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gjs
+BuildRequires: vala
 %ifarch %{golang_arches}
 BuildRequires: golang
 # This version is required for aarch64 to be supported by gcc-go.
@@ -280,7 +284,6 @@ For enhanced features, install:
 For developers:
 
          libguestfs-devel  C/C++ header files and library
-  libguestfs-benchmarking  Benchmarking utilities
 
 Language bindings:
 
@@ -294,20 +297,7 @@ Language bindings:
            php-libguestfs  PHP bindings
        python3-libguestfs  Python 3 bindings
           ruby-libguestfs  Ruby bindings
-
-
-%ifarch aarch64 x86_64
-%package benchmarking
-Summary:       Benchmarking utilities for %{name}
-Requires:      %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-
-
-%description benchmarking
-%{name}-benchmarking contains utilities for benchmarking and
-performance analysis of %{name}, and also for general
-understanding of the performance of the kernel and qemu when booting
-small appliances.
-%endif
+          libguestfs-vala  Vala language bindings
 
 
 %package devel
@@ -708,6 +698,17 @@ This package is needed if you want to write software using the
 GObject bindings.  It also contains GObject Introspection information.
 
 
+%package vala
+Summary:       Vala for %{name}
+Requires:      %{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:      vala
+
+
+%description vala
+%{name}-vala contains GObject bindings for %{name}.
+
+
+
 %ifarch %{golang_arches}
 %package -n golang-guestfs
 Summary:       Golang bindings for %{name}
@@ -791,6 +792,7 @@ fi
   --disable-golang \
 %endif
   --without-java \
+  --disable-erlang \
   $extra
 
 # Building index-parse.c by hand works around a race condition in the
@@ -919,15 +921,6 @@ install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 # Remove the .gitignore file from ocaml/html which will be copied to docdir.
 rm ocaml/html/.gitignore
 
-%ifarch aarch64 x86_64
-# Copy the benchmarking tools and man pages, since upstream doesn't
-# install them by default.  NB Don't install the libtool wrapper scripts.
-libtool --mode=install install -m 0755 utils/boot-analysis/boot-analysis $RPM_BUILD_ROOT%{_bindir}/libguestfs-boot-analysis
-libtool --mode=install install -m 0755 utils/boot-benchmark/boot-benchmark $RPM_BUILD_ROOT%{_bindir}/libguestfs-boot-benchmark
-install -m 0755 utils/boot-benchmark/boot-benchmark-range.pl $RPM_BUILD_ROOT%{_bindir}/libguestfs-boot-benchmark-range.pl
-install -m 0644 utils/boot-analysis/boot-analysis.1 $RPM_BUILD_ROOT%{_mandir}/man1/libguestfs-boot-analysis.1
-install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/man1/libguestfs-boot-benchmark.1
-%endif
 
 # Find locale files.
 %find_lang %{name}
@@ -946,16 +939,6 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man1/guestfs-release-notes-historical.1*
 %{_mandir}/man1/guestfs-security.1*
 %{_mandir}/man1/libguestfs-test-tool.1*
-
-
-%ifarch aarch64 x86_64
-%files benchmarking
-%{_bindir}/libguestfs-boot-analysis
-%{_bindir}/libguestfs-boot-benchmark
-%{_bindir}/libguestfs-boot-benchmark-range.pl
-%{_mandir}/man1/libguestfs-boot-analysis.1*
-%{_mandir}/man1/libguestfs-boot-benchmark.1*
-%endif
 
 
 %files devel
@@ -1178,6 +1161,11 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 %{_mandir}/man3/guestfs-gobject.3*
 
 
+%files vala
+%{_datadir}/vala/vapi/libguestfs-gobject-1.0.deps
+%{_datadir}/vala/vapi/libguestfs-gobject-1.0.vapi
+
+
 %ifarch %{golang_arches}
 %files -n golang-guestfs
 %doc golang/examples/*.go
@@ -1200,6 +1188,11 @@ install -m 0644 utils/boot-benchmark/boot-benchmark.1 $RPM_BUILD_ROOT%{_mandir}/
 
 
 %changelog
+* Mon Mar 09 2020 Richard W.M. Jones <rjones@redhat.com> - 1:1.42.0-1
+- New upstream stable version 1.42.0.
+- Drop the benchmarking subpackage: moved to a new package upstream.
+- Enable Vala bindings.
+
 * Thu Feb 27 2020 Richard W.M. Jones <rjones@redhat.com> - 1:1.41.8-9
 - OCaml 4.10.0 final.
 
