@@ -45,7 +45,7 @@ Summary:       Access and modify virtual machine disk images
 Name:          libguestfs
 Epoch:         1
 Version:       1.42.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       LGPLv2+
 
 # No kernel https://fedoraproject.org/wiki/Changes/Stop_Building_i686_Kernels
@@ -187,7 +187,7 @@ BuildRequires: hfsplus-tools
 # http://zfs-fuse.net/issues/94
 BuildRequires: zfs-fuse
 %endif
-BuildRequires: ntfs-3g ntfsprogs
+BuildRequires: ntfs-3g ntfsprogs ntfs-3g-system-compression
 %ifarch %{ix86} x86_64
 BuildRequires: syslinux syslinux-extlinux
 %endif
@@ -1188,6 +1188,9 @@ rm ocaml/html/.gitignore
 
 
 %changelog
+* Thu Mar 12 2020 Richard W.M. Jones <rjones@redhat.com> - 1:1.42.1-1
+- Enable NTFS-3g system compression.
+
 * Mon Mar 09 2020 Richard W.M. Jones <rjones@redhat.com> - 1:1.42.0-1
 - New upstream stable version 1.42.0.
 - Drop the benchmarking subpackage: moved to a new package upstream.
